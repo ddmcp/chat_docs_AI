@@ -1,0 +1,9 @@
+fastapi==0.110.0
+uvicorn==0.27.1
+sentence-transformers==2.5.1
+torch==2.2.1 --index-url https://download.pytorch.org/whl/cpu
+numpy==1.26.4
+pydantic==2.6.3
+qdrant-client==1.8.0
+python-dotenv==1.0.1
+psycopg2-binary==2.9.9

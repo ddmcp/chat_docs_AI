@@ -1,0 +1,278 @@
+version: '3.8'
+
+services:
+  # -----------------------------
+  # Airflow Webserver
+  # -----------------------------
+  # Provides the Airflow UI (web interface) and REST API.
+  # Handles user login, RBAC, DAG visualization, and task monitoring.
+  # Does NOT execute tasks; it communicates with the Scheduler and Workers.
+  airflow-api-server:
+    build: .
+    # image: apache/airflow:3.1.5 # Updated to latest version
+    container_name: airflow-api-server
+    restart: always
+    environment:
+      # -----------------------------
+      # Do not load example DAGs (for a clean UI)
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      # RBAC is now enabled by default in Airflow 3.x (no need to set explicitly)
+      # Allow exposing airflow.cfg in the UI (for debugging/config info)
+      AIRFLOW__WEBSERVER__EXPOSE_CONFIG: 'true'
+      # Authentication (Airflow 3 FAB)
+      AIRFLOW__CORE__AUTH_MANAGER: 'airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager'
+      AIRFLOW__API__AUTH_BACKENDS: 'airflow.providers.fab.auth_manager.api.auth.backend.basic_auth'
+      AIRFLOW__FAB__AUTH_BACKENDS: 'airflow.providers.fab.auth_manager.api.auth.backend.session,airflow.providers.fab.auth_manager.api.auth.backend.basic_auth'
+      # Execution API (Airflow 3)
+      AIRFLOW__CORE__EXECUTION_API_SERVER_URL: 'http://airflow-api-server:8080/execution'
+      # Fernet key for encrypting connections/variables
+      AIRFLOW__CORE__FERNET_KEY: 'q0xPBBjEFENFHslSCgZPb-XIT66kb27N36AtX7YNN94='
+      # Shared secrets for internal JWT authentication between components
+      AIRFLOW__CORE__INTERNAL_API_SECRET_KEY: 'RqzCPqKJi7MxJZPaRThQuWvXkeW4F_tHdFo8ELBq3rI='
+      AIRFLOW__API_AUTH__JWT_SECRET: 'RqzCPqKJi7MxJZPaRThQuWvXkeW4F_tHdFo8ELBq3rI='
+      # UID for container processes
+      AIRFLOW_UID: 50000
+      # PostgreSQL database connection
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: 'postgresql+psycopg2://airflow:airflow@postgres-airflow-db:5432/airflow'
+      # Connection to the PDF Application database
+      AIRFLOW_CONN_PDF_DB: 'postgresql://pdfuser:pdfpassword@postgres-pdf-text-metadata-db:5432/pdfdb'
+    # command to run when the container starts
+    command: bash -c "airflow db migrate && airflow api-server"
+    ports:
+      - "8080:8080" # Map webserver to host port 8080
+    volumes:
+      # Mount local folders for DAGs, logs
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./postgres-airflow-db:/opt/airflow/data # Only database files
+    depends_on:
+      postgres-airflow-db:
+        condition: service_healthy
+      airflow-scheduler:
+        condition: service_started
+
+  # -----------------------------
+  # Airflow Scheduler
+  # -----------------------------
+  # Continuously monitors DAGs and triggers tasks according to DAG definitions.
+  # Reads and writes to the Airflow metadata database (default SQLite in local setups).
+  # Responsible for:
+  #   - Scheduling DAG runs (dag_run table)
+  #   - Tracking task states (task_instance table)
+  #   - Reading/writing variables, connections, XComs
+  # Note: SQLite is fine for single-container/local development, 
+  # but PostgreSQL/MySQL is recommended for multi-container setups.
+  airflow-scheduler:
+    build: .
+    # image: apache/airflow:3.1.5 # Updated to latest version
+    container_name: airflow-scheduler
+    restart: always
+    environment:
+      AIRFLOW_UID: 50000
+      # Match webserver config for consistency
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__CORE__FERNET_KEY: 'q0xPBBjEFENFHslSCgZPb-XIT66kb27N36AtX7YNN94='
+      # Shared secrets for internal JWT authentication between components
+      AIRFLOW__CORE__INTERNAL_API_SECRET_KEY: 'RqzCPqKJi7MxJZPaRThQuWvXkeW4F_tHdFo8ELBq3rI='
+      AIRFLOW__API_AUTH__JWT_SECRET: 'RqzCPqKJi7MxJZPaRThQuWvXkeW4F_tHdFo8ELBq3rI='
+      # PostgreSQL database location
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: 'postgresql+psycopg2://airflow:airflow@postgres-airflow-db:5432/airflow'
+      # Connection to the PDF Application database
+      AIRFLOW_CONN_PDF_DB: 'postgresql://pdfuser:pdfpassword@postgres-pdf-text-metadata-db:5432/pdfdb'
+      # Authentication (Airflow 3 FAB)
+      AIRFLOW__CORE__AUTH_MANAGER: 'airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager'
+      AIRFLOW__FAB__AUTH_BACKENDS: 'airflow.providers.fab.auth_manager.api.auth.backend.session,airflow.providers.fab.auth_manager.api.auth.backend.basic_auth'
+      # Execution API (Airflow 3)
+      AIRFLOW__CORE__EXECUTION_API_SERVER_URL: 'http://airflow-api-server:8080/execution'
+    # command to run when the container starts
+    command: scheduler
+    ports:
+      - "5678:5678"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./postgres-airflow-db:/opt/airflow/data # Only database files
+    depends_on:
+      postgres-airflow-db:
+        condition: service_healthy
+      minio:
+        condition: service_started
+
+  # -----------------------------
+  # Airflow DAG Processor (Required in Airflow 3)
+  # -----------------------------
+  # Parses DAG files and serializes them to the metadata database.
+  # Without this service, DAGs will not appear in the UI or `airflow dags list`.
+  airflow-dag-processor:
+    build: .
+    container_name: airflow-dag-processor
+    restart: always
+    environment:
+      AIRFLOW_UID: 50000
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__CORE__FERNET_KEY: 'q0xPBBjEFENFHslSCgZPb-XIT66kb27N36AtX7YNN94='
+      AIRFLOW__CORE__INTERNAL_API_SECRET_KEY: 'RqzCPqKJi7MxJZPaRThQuWvXkeW4F_tHdFo8ELBq3rI='
+      AIRFLOW__API_AUTH__JWT_SECRET: 'RqzCPqKJi7MxJZPaRThQuWvXkeW4F_tHdFo8ELBq3rI='
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: 'postgresql+psycopg2://airflow:airflow@postgres-airflow-db:5432/airflow'
+      # Connection to the PDF Application database
+      AIRFLOW_CONN_PDF_DB: 'postgresql://pdfuser:pdfpassword@postgres-pdf-text-metadata-db:5432/pdfdb'
+      AIRFLOW__CORE__AUTH_MANAGER: 'airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager'
+      AIRFLOW__CORE__EXECUTION_API_SERVER_URL: 'http://airflow-api-server:8080/execution'
+    # command to run when the container starts
+    command: dag-processor
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./postgres-airflow-db:/opt/airflow/data # Only database files
+    depends_on:
+      - postgres-airflow-db
+      - airflow-scheduler
+
+  # -----------------------------
+  # PostgreSQL Database
+  # -----------------------------
+  # Metadata database for Airflow (schedules, DAG runs, task instances, etc.)
+  # Data is persisted in ./airflow-postgres-db/postgres volume
+  postgres-airflow-db:
+    image: postgres:15
+    container_name: postgres-airflow-db
+    restart: always
+    environment:
+      #TODO: only for dev
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-airflow-db/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "airflow" ]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+
+  # -----------------------------
+  # MinIO Object Storage
+  # -----------------------------
+  # S3-compatible object storage to hold files for processing (e.g., PDFs, CSVs).
+  # Can send event notifications to Airflow API for automated DAG triggers.
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    restart: always
+    environment:
+      #TODO: only for dev
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000" # S3 API endpoint
+      - "9001:9001" # MinIO Console UI
+    command: server /data --console-address ":9001"
+    volumes:
+      - ./minio_data:/data # Persistent storage for objects
+
+  # -----------------------------
+  # PDF Metadata & Extraction Database
+  # -----------------------------
+  postgres-pdf-text-metadata-db:
+    image: postgres:15
+    container_name: postgres-pdf-text-metadata-db
+    restart: always
+    environment:
+      POSTGRES_USER: pdfuser
+      POSTGRES_PASSWORD: pdfpassword
+      POSTGRES_DB: pdfdb
+    ports:
+      - "5433:5432" # Host port 5433 to avoid conflict with Airflow DB
+    volumes:
+      - ./postgres-pdf-text-metadata-db:/var/lib/postgresql/data
+      - ./postgres-pdf-text-metadata-db-init-scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "pdfuser", "-d", "pdfdb" ]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+
+  # -----------------------------
+  # PDF MachineTyping Embedding Microservice
+  # -----------------------------
+  # Extracts MachineTyping text from PDF files in MinIO and generates embedding vectors.
+  extractor-typin-pdf-microservice:
+    build:
+      context: ./extractor-typin-pdf-microservice
+    container_name: extractor-typin-pdf-microservice
+    restart: always
+    env_file:
+      - ./extractor-typin-pdf-microservice/.env.dev
+    environment:
+      - DB_HOST=postgres-pdf-text-metadata-db
+      - DB_NAME=pdfdb
+      - DB_USER=pdfuser
+      - DB_PASS=pdfpassword
+      - QDRANT_HOST=qdrant-pdf-vector-db
+      - QDRANT_PORT=6333
+    volumes:
+      - ./extractor-typin-pdf-microservice:/app
+    depends_on:
+      - minio
+      - postgres-pdf-text-metadata-db
+      - qdrant-pdf-vector-db
+    ports:
+      - "8002:8000"
+
+  # -----------------------------
+  # Qdrant Vector Database
+  # -----------------------------
+  # Stores high-quality embedding vectors for semantic search.
+  qdrant-pdf-vector-db:
+    image: qdrant/qdrant:latest
+    container_name: qdrant-pdf-vector-db
+    restart: always
+    ports:
+      - "6333:6333" # HTTP API
+      - "6334:6334" # gRPC API
+    volumes:
+      - ./qdrant-pdf-vector-db:/qdrant/storage
+    healthcheck:
+      test: [ "CMD", "bash", "-c", "</dev/tcp/127.0.0.1/6333" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # -----------------------------
+  # PDF Text Searcher Microservice
+  # -----------------------------
+  # Allows semantic search over processed PDF chunks.
+  text-searcher-microservice:
+    build:
+      context: ./text-searcher-microservice
+    container_name: text-searcher-microservice
+    restart: always
+    environment:
+      - DB_HOST=postgres-pdf-text-metadata-db
+      - DB_NAME=pdfdb
+      - DB_USER=pdfuser
+      - DB_PASS=pdfpassword
+      - QDRANT_HOST=qdrant-pdf-vector-db
+      - QDRANT_PORT=6333
+    volumes:
+      - ./text-searcher-microservice:/app
+    depends_on:
+      - qdrant-pdf-vector-db
+      - postgres-pdf-text-metadata-db
+    ports:
+      - "8003:8000"
+
+# -----------------------------
+# Volumes
+# -----------------------------
+# Persistent storage for MinIO objects
+# /var/lib/docker/volumes/minio_data
+volumes:
+  minio_data:
+
+
+networks:
+  default:
+    name: airflow-minio-network

@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+.env
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project Data & Logs
+minio_data/
+postgres-airflow-db/
+postgres-pdf-text-metadata-db/
+qdrant-pdf-vector-db/
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

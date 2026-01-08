@@ -1,0 +1,14 @@
+.venv
+postgres-airflow-db
+minio_data
+postgres-pdf-text-metadata-db
+qdrant-pdf-vector-db
+logs
+pdf_examples
+.git
+.gitignore
+.dockerignore
+docker-compose.yml
+extractor-typin-pdf-microservice
+text-searcher-microservice
+.DS_Store
