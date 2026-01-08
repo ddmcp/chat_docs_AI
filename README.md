@@ -1,4 +1,4 @@
-# 🚀 Airflow & MinIO: Intelligent PDF RAG Pipeline
+# 🚀 Chat with your DOCS using Airflow & MinIO: GenAI LLMs and RAG Pipeline
 
 ***Transform your static PDF collection into a searchable, interactive knowledge base using Airflow and Vector Embeddings.***
 
