@@ -88,7 +88,7 @@ class EmbeddingProcessor:
             self.pg.update_embedding_status(pdf_id, "in progress")
 
 
-            # 2. Read all chunks for this pdf_id
+            # 2. Read all chunks for this pdf_id from Postgres
             chunks = self.pg.get_chunks_to_embed(pdf_id)
             if not chunks:
                 logger.warning(f"No chunks found for PDF {pdf_id}")
@@ -103,16 +103,23 @@ class EmbeddingProcessor:
                 text = chunk["text"]
                 
                 # 3. Create embeddings for each chunk
-                logger.debug(f"Generating embedding for chunk {chunk_id}...")
-                vector = self.llm.get_embedding(text)
-
-                # 4. Create Qdrant point with requested metadata
-                # metadata for the point "best practice" -> inclusion of source info
-                short_text = self._get_short_text(text)
+                logger.debug(f"Generating embeddings for chunk {chunk_id}...")
+                full_chunk_text_vector = self.llm.get_embedding(text)
                 
+                # For summary_vector, we can either summarize and then embed,
+                # or for this demonstration, we'll embed the "short text" 
+                # to show that different vectors can be stored.
+                short_text = self._get_short_text(text)
+                # TODO: add summary generation via LLM
+                chunk_summary_vector = self.llm.get_embedding(short_text)
+
+                # 4. Create Qdrant point with named vectors
                 point = models.PointStruct(
                     id=str(chunk_id), # Use chunk_id as point ID
-                    vector=vector,
+                    vector={
+                        "full_chunk_text": full_chunk_text_vector,
+                        "chunk_summary": chunk_summary_vector
+                    },
                     payload={
                         "pdf_id": str(pdf_id),
                         "chunk_id": str(chunk_id),
