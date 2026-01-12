@@ -39,7 +39,7 @@ class SearchService:
 
     def find_by_text(self, query: str, limit: int = 5) -> List[Dict]:
         """
-        Encodes query text and searches for similar chunks in Qdrant using named vectors.
+        Encodes query to vector and searches for similar chunks in Qdrant using named vectors.
         """
         try:
             logger.info(f"Searching for: '{query}' (limit: {limit})")
@@ -48,16 +48,16 @@ class SearchService:
             query_vector = self.llm.get_embedding(query)
             
             # 2. Search in Qdrant using named vector 'full_chunk_text'
-            search_result = self.qdrant_client.search(
+            # Using query_points as 'search' is deprecated/unavailable in newer qdrant-client versions
+            query_response = self.qdrant_client.query_points(
                 collection_name=self.collection_name,
-                query_vector=models.NamedVector(
-                    name="full_chunk_text",
-                    vector=query_vector
-                ),
+                query=query_vector,
+                using="full_chunk_text",
                 limit=limit,
                 with_payload=True,
                 with_vectors=False
             )
+            search_result = query_response.points
 
             # 3. Get text data and metadata for each chunk by chunk id from postgres
             chunk_ids = [str(hit.id) for hit in search_result]

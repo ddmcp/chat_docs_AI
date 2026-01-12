@@ -9,7 +9,7 @@ class LLMClient:
     def __init__(self):
         # Using environment variables for flexibility
         self.base_url = os.getenv("OLLAMA_EMBEDDING_URL", "http://ollama-llm-embedding:11434")
-        self.model = os.getenv("OLLAMA_MODEL", "nomic-embed-text")
+        self.model = os.getenv("OLLAMA_EMBEDDING_MODEL", "nomic-embed-text")
 
     def get_embedding(self, text: str) -> List[float]:
         """Fetches embedding for a single string from Ollama."""

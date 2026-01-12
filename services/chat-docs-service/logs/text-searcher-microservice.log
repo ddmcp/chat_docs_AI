@@ -614,3 +614,814 @@ In general, connecting cables can be tricky and requires specific tools, such as
 2026-01-11 18:38:48,641 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
 2026-01-11 18:38:48,642 - chat-client - INFO - Sending chat request to Ollama: tinyllama
 2026-01-11 18:39:25,243 - text-searcher-api - INFO - Step 6: Final answer generated.
+2026-01-12 07:00:42,494 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 07:06:33,833 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 07:06:33,834 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 07:06:33,834 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 07:06:33,856 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 07:06:46,882 - text-searcher-api - INFO - Step 1: Refining search query for: How does the locking mechanism work to prevent race conditions during PDF processing?
+2026-01-12 07:06:46,883 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 07:06:54,364 - text-searcher-api - INFO - Refined search query: The locking mechanism implemented in the PDF processor software prevents race conditions by using exclusive locks to ensure that only one thread is processing the PDF at a time. This means that when a new thread tries to open or save a PDF file, it will first obtain an exclusive lock on the corresponding file handle before attempting to modify its contents.
+
+The exclusive locks are implemented through a mutex, which is a critical section in a lock-free implementation of thread safety. A critical section is a block of code that must be executed by exactly one thread at a time. When a new thread tries to execute the critical section, it acquires the mutex lock, and other threads can wait for this lock by using other critical sections. Once the critical section has finished executing, the locked lock is released, and other threads can proceed with their own execution.
+
+When using exclusive locks in PDF processing, the PDF processor software will prevent any new thread from opening or saving a PDF file until the previous thread has completed its operations. This ensures that no other thread modifies the PDF file concurrently, and only one thread at a time can manipulate it. In this way, race conditions between different threads are prevented during PDF processing.
+2026-01-12 07:06:54,366 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: The locking mechanism implemented in the PDF processor software prevents race conditions by using exclusive locks to ensure that only one thread is processing the PDF at a time. This means that when a new thread tries to open or save a PDF file, it will first obtain an exclusive lock on the corresponding file handle before attempting to modify its contents.
+
+The exclusive locks are implemented through a mutex, which is a critical section in a lock-free implementation of thread safety. A critical section is a block of code that must be executed by exactly one thread at a time. When a new thread tries to execute the critical section, it acquires the mutex lock, and other threads can wait for this lock by using other critical sections. Once the critical section has finished executing, the locked lock is released, and other threads can proceed with their own execution.
+
+When using exclusive locks in PDF processing, the PDF processor software will prevent any new thread from opening or saving a PDF file until the previous thread has completed its operations. This ensures that no other thread modifies the PDF file concurrently, and only one thread at a time can manipulate it. In this way, race conditions between different threads are prevented during PDF processing.
+2026-01-12 07:06:54,367 - search-service - INFO - Searching for: 'The locking mechanism implemented in the PDF processor software prevents race conditions by using exclusive locks to ensure that only one thread is processing the PDF at a time. This means that when a new thread tries to open or save a PDF file, it will first obtain an exclusive lock on the corresponding file handle before attempting to modify its contents.
+
+The exclusive locks are implemented through a mutex, which is a critical section in a lock-free implementation of thread safety. A critical section is a block of code that must be executed by exactly one thread at a time. When a new thread tries to execute the critical section, it acquires the mutex lock, and other threads can wait for this lock by using other critical sections. Once the critical section has finished executing, the locked lock is released, and other threads can proceed with their own execution.
+
+When using exclusive locks in PDF processing, the PDF processor software will prevent any new thread from opening or saving a PDF file until the previous thread has completed its operations. This ensures that no other thread modifies the PDF file concurrently, and only one thread at a time can manipulate it. In this way, race conditions between different threads are prevented during PDF processing.' (limit: 3)
+2026-01-12 07:06:54,367 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 07:06:55,179 - search-service - INFO - Targeting chunk IDs: ['a2b4f1d2-8b2b-484b-ac1d-dc1bb917a727', '7c58308d-edc1-4a22-bb3a-9dd7eb3aebf6', '0fcd077e-2d4d-4abf-a198-0b62f81a2a79']
+2026-01-12 07:06:55,179 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 07:06:55,226 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 07:06:55,226 - search-service - INFO - Found 3 matches for query.
+2026-01-12 07:06:55,227 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 07:06:55,227 - text-searcher-api - INFO - Step 4: Refining explanation intent for: How does the locking mechanism work to prevent race conditions during PDF processing?
+2026-01-12 07:06:55,227 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 07:07:01,176 - text-searcher-api - INFO - Explanation intent: When using the PDF processor in JavaScript, there is a locking mechanism designed to prevent race conditions during PDF processing. This mechanism ensures that only one instance of the PDF processor is running at any given time. Here's how it works:
+
+1. The PDF processor creates a new instance of itself when a user opens a PDF file for editing or exporting.
+
+2. The first instance runs asynchronously, i.e., without blocking the other instances from working until the user selects another PDF file for processing.
+
+3. Whenever the user selects another PDF file for processing, the second instance of the PDF processor is started.
+
+4. Once the second instance is running, it can perform its processing and updates the PDF file being processed.
+
+5. The locking mechanism ensures that only one instance of the PDF processor at a time is active. If another instance starts processing the same PDF file while the first instance is still running, the new instance will not overwrite any changes made by the first instance. Instead, it will merge its changes with the existing ones.
+
+This design approach helps avoid race conditions and ensures that only one PDF processor at a time can run at any given time.
+2026-01-12 07:07:01,177 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 07:07:01,178 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 07:07:18,340 - text-searcher-api - INFO - Step 6: Final answer generated.
+2026-01-12 07:07:40,199 - text-searcher-api - INFO - Step 1: Refining search query for: What is the specific locking mechanism mentioned in the documents?
+2026-01-12 07:07:40,204 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 07:07:47,208 - text-searcher-api - INFO - Refined search query: In the context of a relational database system, the specific locking mechanism mentioned in the documents refers to how the database manages concurrency control. In general, databases use different types of locks or constraints (e.g., exclusive, non-exclusive) to ensure that only one transaction at a time can access a particular record or table.
+
+Locking is used to prevent multiple transactions from accessing the same resource simultaneously while guaranteeing that each transaction gets an exclusive hold on it. This helps prevent race conditions and other forms of data inconsistency. In databases, multiple concurrent transactions are typically handled by locking specific rows in the database table until only one of them can proceed.
+
+The type of lock used depends on the type and nature of the resource being accessed. For example, exclusive locks ensure that no two threads simultaneously hold a reference to the same row, preventing race conditions. Non-exclusive locks are useful for cases where concurrency is more predictable (e.g., updating a table) but still allow multiple transactions to access the same resource.
+
+In summary, databases use different types of locks or constraints to ensure that only one transaction at a time can access a particular record or table. The type of lock used depends on the nature and type of resource being accessed, as well as the specific requirements for concurrency control.
+2026-01-12 07:07:47,208 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: In the context of a relational database system, the specific locking mechanism mentioned in the documents refers to how the database manages concurrency control. In general, databases use different types of locks or constraints (e.g., exclusive, non-exclusive) to ensure that only one transaction at a time can access a particular record or table.
+
+Locking is used to prevent multiple transactions from accessing the same resource simultaneously while guaranteeing that each transaction gets an exclusive hold on it. This helps prevent race conditions and other forms of data inconsistency. In databases, multiple concurrent transactions are typically handled by locking specific rows in the database table until only one of them can proceed.
+
+The type of lock used depends on the type and nature of the resource being accessed. For example, exclusive locks ensure that no two threads simultaneously hold a reference to the same row, preventing race conditions. Non-exclusive locks are useful for cases where concurrency is more predictable (e.g., updating a table) but still allow multiple transactions to access the same resource.
+
+In summary, databases use different types of locks or constraints to ensure that only one transaction at a time can access a particular record or table. The type of lock used depends on the nature and type of resource being accessed, as well as the specific requirements for concurrency control.
+2026-01-12 07:07:47,209 - search-service - INFO - Searching for: 'In the context of a relational database system, the specific locking mechanism mentioned in the documents refers to how the database manages concurrency control. In general, databases use different types of locks or constraints (e.g., exclusive, non-exclusive) to ensure that only one transaction at a time can access a particular record or table.
+
+Locking is used to prevent multiple transactions from accessing the same resource simultaneously while guaranteeing that each transaction gets an exclusive hold on it. This helps prevent race conditions and other forms of data inconsistency. In databases, multiple concurrent transactions are typically handled by locking specific rows in the database table until only one of them can proceed.
+
+The type of lock used depends on the type and nature of the resource being accessed. For example, exclusive locks ensure that no two threads simultaneously hold a reference to the same row, preventing race conditions. Non-exclusive locks are useful for cases where concurrency is more predictable (e.g., updating a table) but still allow multiple transactions to access the same resource.
+
+In summary, databases use different types of locks or constraints to ensure that only one transaction at a time can access a particular record or table. The type of lock used depends on the nature and type of resource being accessed, as well as the specific requirements for concurrency control.' (limit: 3)
+2026-01-12 07:07:47,209 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 07:07:47,519 - search-service - INFO - Targeting chunk IDs: ['a2b4f1d2-8b2b-484b-ac1d-dc1bb917a727', '81f6c73d-763b-4042-954c-1b37173328c2', 'b7ada28e-a621-4806-95cd-ed4b7075c6c6']
+2026-01-12 07:07:47,520 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 07:07:47,536 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 07:07:47,537 - search-service - INFO - Found 3 matches for query.
+2026-01-12 07:07:47,537 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 07:07:47,537 - text-searcher-api - INFO - Step 4: Refining explanation intent for: What is the specific locking mechanism mentioned in the documents?
+2026-01-12 07:07:47,538 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 07:07:49,863 - text-searcher-api - INFO - Explanation intent: In the documents, there are no details about the specific locking mechanism used to ensure the confidentiality and security of user data. However, it can be inferred from the descriptions that the program or system uses a combination of algorithms such as encryption and authentication to prevent unauthorized access, deletion, or modification of sensitive information.
+2026-01-12 07:07:49,863 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 07:07:49,864 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 07:08:26,782 - text-searcher-api - INFO - Step 6: Final answer generated.
+2026-01-12 11:29:53,904 - text-searcher-api - INFO - Step 1: Refining search query for: How many amps does the welding machine support?
+2026-01-12 11:29:53,910 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 11:38:46,746 - text-searcher-api - INFO - Refined search query: The welding machine in question doesn't have an explicit number of amps mentioned in its description. It may vary based on specific models, features, and intended use. However, the term "amps" is commonly used to describe the amount of power or electrical current that a device, tool, or equipment is designed for or capable of delivering. In this context, it's typically used as a shorthand for "amperes", which are an unit of measure for electricity intensity, but not always interchangeably used with "amps".
+2026-01-12 11:38:46,748 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: The welding machine in question doesn't have an explicit number of amps mentioned in its description. It may vary based on specific models, features, and intended use. However, the term "amps" is commonly used to describe the amount of power or electrical current that a device, tool, or equipment is designed for or capable of delivering. In this context, it's typically used as a shorthand for "amperes", which are an unit of measure for electricity intensity, but not always interchangeably used with "amps".
+2026-01-12 11:38:46,748 - search-service - INFO - Searching for: 'The welding machine in question doesn't have an explicit number of amps mentioned in its description. It may vary based on specific models, features, and intended use. However, the term "amps" is commonly used to describe the amount of power or electrical current that a device, tool, or equipment is designed for or capable of delivering. In this context, it's typically used as a shorthand for "amperes", which are an unit of measure for electricity intensity, but not always interchangeably used with "amps".' (limit: 3)
+2026-01-12 11:38:46,749 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 11:38:47,756 - search-service - INFO - Targeting chunk IDs: ['eed682a8-5686-42b3-a1dc-7ee592c28b87', 'e9a27d06-39a1-4720-85bc-3add5b5477cc', '268e89f2-f31a-4675-be21-349e5b506913']
+2026-01-12 11:38:47,756 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 11:38:47,781 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 11:38:47,782 - search-service - INFO - Found 3 matches for query.
+2026-01-12 11:38:47,783 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 11:38:47,783 - text-searcher-api - INFO - Step 4: Refining explanation intent for: How many amps does the welding machine support?
+2026-01-12 11:38:47,784 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 11:38:51,836 - text-searcher-api - INFO - Explanation intent: I do not have access to specific information about a particular product or manufacturer, but generally, an electric welder has two main types of amps: continuous-duty (cd) and continuous-flow (cf). The cd amps are designed for welding in a closed workspace without air flow, while cf amps have a more open area with air flow and can handle larger jobs. The specific type of amp a welder may have depends on the manufacturer's design and features. It's always best to consult the user manual or ask an expert to determine the appropriate welding machine for your project's requirements.
+2026-01-12 11:38:51,837 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 11:38:51,837 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 11:39:20,458 - text-searcher-api - INFO - Step 6: Final answer generated.
+2026-01-12 11:39:41,917 - text-searcher-api - INFO - Step 1: Refining search query for: Tell me about welding machine controls
+2026-01-12 11:39:41,918 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 11:39:51,038 - text-searcher-api - INFO - Refined search query: Welling Machine Controls (WLC) is a global leader in providing customized automation solutions for various industrial applications. Our expertise spans across manufacturing, energy, and transportation sectors. We have been at the forefront of integrating intelligent controls, including PLCs, HMIs, and Ethernet, into our customers' systems.
+
+At WLC, we offer comprehensive welding machine control solutions that cater to a wide range of industries. Our welding machine control systems are designed for high-precision welding operations in various applications such as metal fabrication, automotive, and shipbuilding. We provide customized solutions according to each customer's specific requirements.
+
+Our welding machine control systems offer several benefits like:
+
+1. Improved efficiency and productivity: Our control systems help welders perform faster and better welds, resulting in increased production rates and reduced lead times for customers.
+
+2. Minimized downtime: Our control systems ensure that machines operate continuously without any interruptions, minimizing downtimes while increasing overall uptime.
+
+3. Enhanced safety: Our systems are designed to provide maximum safety and reduce the risk of accidents during welding operations.
+
+4. Better quality: Our systems are equipped with advanced quality control measures that ensure the highest level of weld quality in terms of surface finish, alignment, and joint integrity.
+
+To better understand our customized welding machine control solutions, we invite you to visit our website or contact us for more information. We would be happy to discuss your needs in detail and provide you with a free consultation.
+2026-01-12 11:39:51,039 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: Welling Machine Controls (WLC) is a global leader in providing customized automation solutions for various industrial applications. Our expertise spans across manufacturing, energy, and transportation sectors. We have been at the forefront of integrating intelligent controls, including PLCs, HMIs, and Ethernet, into our customers' systems.
+
+At WLC, we offer comprehensive welding machine control solutions that cater to a wide range of industries. Our welding machine control systems are designed for high-precision welding operations in various applications such as metal fabrication, automotive, and shipbuilding. We provide customized solutions according to each customer's specific requirements.
+
+Our welding machine control systems offer several benefits like:
+
+1. Improved efficiency and productivity: Our control systems help welders perform faster and better welds, resulting in increased production rates and reduced lead times for customers.
+
+2. Minimized downtime: Our control systems ensure that machines operate continuously without any interruptions, minimizing downtimes while increasing overall uptime.
+
+3. Enhanced safety: Our systems are designed to provide maximum safety and reduce the risk of accidents during welding operations.
+
+4. Better quality: Our systems are equipped with advanced quality control measures that ensure the highest level of weld quality in terms of surface finish, alignment, and joint integrity.
+
+To better understand our customized welding machine control solutions, we invite you to visit our website or contact us for more information. We would be happy to discuss your needs in detail and provide you with a free consultation.
+2026-01-12 11:39:51,040 - search-service - INFO - Searching for: 'Welling Machine Controls (WLC) is a global leader in providing customized automation solutions for various industrial applications. Our expertise spans across manufacturing, energy, and transportation sectors. We have been at the forefront of integrating intelligent controls, including PLCs, HMIs, and Ethernet, into our customers' systems.
+
+At WLC, we offer comprehensive welding machine control solutions that cater to a wide range of industries. Our welding machine control systems are designed for high-precision welding operations in various applications such as metal fabrication, automotive, and shipbuilding. We provide customized solutions according to each customer's specific requirements.
+
+Our welding machine control systems offer several benefits like:
+
+1. Improved efficiency and productivity: Our control systems help welders perform faster and better welds, resulting in increased production rates and reduced lead times for customers.
+
+2. Minimized downtime: Our control systems ensure that machines operate continuously without any interruptions, minimizing downtimes while increasing overall uptime.
+
+3. Enhanced safety: Our systems are designed to provide maximum safety and reduce the risk of accidents during welding operations.
+
+4. Better quality: Our systems are equipped with advanced quality control measures that ensure the highest level of weld quality in terms of surface finish, alignment, and joint integrity.
+
+To better understand our customized welding machine control solutions, we invite you to visit our website or contact us for more information. We would be happy to discuss your needs in detail and provide you with a free consultation.' (limit: 3)
+2026-01-12 11:39:51,040 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 11:39:51,362 - search-service - INFO - Targeting chunk IDs: ['574a0806-df5c-41bb-ac16-82dc888e1cdb', 'b7ada28e-a621-4806-95cd-ed4b7075c6c6', 'db136092-1fb4-49aa-afc1-e839ad1d51e5']
+2026-01-12 11:39:51,362 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 11:39:51,372 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 11:39:51,373 - search-service - INFO - Found 3 matches for query.
+2026-01-12 11:39:51,373 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 11:39:51,373 - text-searcher-api - INFO - Step 4: Refining explanation intent for: Tell me about welding machine controls
+2026-01-12 11:39:51,374 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 11:39:57,251 - text-searcher-api - INFO - Explanation intent: Welling Machine Controls (WMC) is a leading supplier of automated, integrated water treatment and filtration solutions that help customers increase production while improving efficiency, reliability, and profitability. Our comprehensive range of industrial valves and actuators for welding machines offers the most complete solution on the market, providing operators with seamless control over welding operations from start to finish.
+
+WMC's controls are designed and engineered to meet the specific requirements of a wide variety of welding applications. From single-point manual shutoff valves to multi-function valve controllers that provide remote monitoring, our controls are customizable to your unique needs.
+
+Our control technology is based on years of expertise in welding equipment and automation technologies. Our team of experts works closely with you throughout the design and implementation process, ensuring that our valves and actuators fully meet your expectations for performance, reliability, and functionality.
+
+In summary, WMC provides the most complete solution on the market for controlling welding machines and operations using integrated water treatment and filtration technology. Our customizable controls are designed to meet specific needs and provide operators with seamless control over welding processes from start to finish.
+2026-01-12 11:39:57,252 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 11:39:57,253 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 11:40:29,622 - text-searcher-api - INFO - Step 6: Final answer generated.
+2026-01-12 11:50:44,907 - text-searcher-api - INFO - Step 1: Refining search query for: провода
+2026-01-12 11:50:44,910 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 11:50:51,108 - text-searcher-api - INFO - Refined search query: Yes, that's a great start! Here's an enhanced version of the task:
+
+1. Focus on technical keywords, specific entities, and the primary question.
+2. Remove conversational filler (e.g., "I want to know", "Can you find").
+3. Respond in the SAME LANGUAGE as the user input.
+4. Output ONLY the refined query string, no preambles or explanations.
+5. Use the same language as the user input only, and don't add any additional information or context.
+6. Prepare the query only on the user input and don't include any additional information or context, such as the database schema or index information.
+2026-01-12 11:50:51,108 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: Yes, that's a great start! Here's an enhanced version of the task:
+
+1. Focus on technical keywords, specific entities, and the primary question.
+2. Remove conversational filler (e.g., "I want to know", "Can you find").
+3. Respond in the SAME LANGUAGE as the user input.
+4. Output ONLY the refined query string, no preambles or explanations.
+5. Use the same language as the user input only, and don't add any additional information or context.
+6. Prepare the query only on the user input and don't include any additional information or context, such as the database schema or index information.
+2026-01-12 11:50:51,109 - search-service - INFO - Searching for: 'Yes, that's a great start! Here's an enhanced version of the task:
+
+1. Focus on technical keywords, specific entities, and the primary question.
+2. Remove conversational filler (e.g., "I want to know", "Can you find").
+3. Respond in the SAME LANGUAGE as the user input.
+4. Output ONLY the refined query string, no preambles or explanations.
+5. Use the same language as the user input only, and don't add any additional information or context.
+6. Prepare the query only on the user input and don't include any additional information or context, such as the database schema or index information.' (limit: 5)
+2026-01-12 11:50:51,109 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 11:50:52,087 - search-service - INFO - Targeting chunk IDs: ['dd5a2670-0bf9-426c-90c1-95f6f62f2699', 'a2b4f1d2-8b2b-484b-ac1d-dc1bb917a727', 'e53a528e-1aad-478a-ace7-cf8f6aa771ca', 'c1d55060-12eb-43ab-885b-697c024ef573', '976a4699-ca6a-4111-8e9f-40268db6ef70']
+2026-01-12 11:50:52,088 - search-service - INFO - Fetching full text and metadata for 5 chunks from Postgres...
+2026-01-12 11:50:52,149 - search-service - INFO - Postgres returned 5 records for 5 searched IDs.
+2026-01-12 11:50:52,149 - search-service - INFO - Found 5 matches for query.
+2026-01-12 11:50:52,150 - text-searcher-api - INFO - Retrieved 5 relevant chunks.
+2026-01-12 11:50:52,150 - text-searcher-api - INFO - Step 4: Refining explanation intent for: провода
+2026-01-12 11:50:52,150 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 11:50:57,000 - text-searcher-api - INFO - Explanation intent: ### ROLE
+You are a professional translator specializing in legal documents.
+
+### TASK
+Given a legal document in a different language (English to Spanish), produce an accurate, grammatically correct and idiomatic translation in the target language. The translation should be presented within 1-2 business days of receipt of the original document.
+
+### CONSTRAINTS
+1. Review the translated material for clarity, grammar, and relevance to the intended audience.
+2. Ensure that the translation adheres to standard legal terminology and usage in the target language.
+3. Prepare a detailed report outlining the translated text with accompanying comments and suggestions for improvement.
+4. Deliver the translation along with a transcription of the text in English to the client.
+2026-01-12 11:50:57,002 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 11:50:57,002 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 11:51:34,915 - text-searcher-api - INFO - Step 6: Final answer generated.
+2026-01-12 11:51:57,931 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:54:58,129 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:54:58,129 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:54:58,129 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:54:58,214 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:55:45,670 - text-searcher-api - INFO - Step 1: Refining search query for: Подключение кабелей
+2026-01-12 13:56:02,119 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 13:56:02,184 - chat-client - ERROR - Error calling Ollama chat: HTTPConnectionPool(host='ollama-llm-chat', port=11434): Max retries exceeded with url: /api/chat (Caused by NameResolutionError("HTTPConnection(host='ollama-llm-chat', port=11434): Failed to resolve 'ollama-llm-chat' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-01-12 13:56:02,184 - text-searcher-api - ERROR - Error in RAG flow: HTTPConnectionPool(host='ollama-llm-chat', port=11434): Max retries exceeded with url: /api/chat (Caused by NameResolutionError("HTTPConnection(host='ollama-llm-chat', port=11434): Failed to resolve 'ollama-llm-chat' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-01-12 11:59:12,594 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 11:59:12,596 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 11:59:12,596 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 11:59:12,685 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:02:29,759 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 12:02:51,475 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 12:02:51,478 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 12:02:51,478 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 12:02:51,547 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:04:15,067 - text-searcher-api - INFO - Step 1: Refining search query for: кабели подключения как подключить?
+2026-01-12 12:04:15,070 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 12:06:10,847 - text-searcher-api - INFO - Refined search query: Кабель подключения можно имитировать с помощью компьютерной телефона или другого устройства, который способен принимать и посылать данные сети. Однако, не все устройства поддерживают кабельный кабель как основной способ связи.
+
+Из-за различных причин (например, внутридокументности, необходимости отраслевых конкуренций и т.п.) существует большое количество способов подключения (подключать) электрическую проводную связь.
+
+Первый вариант - примитивизация: вызывает в кабель носовок или телефонов, спускающаяся с носового оборудования, посылая сетевой сигнал на основной кабель.
+
+Стоит также подчеркнуть, что примитивизация, несмотря на свои преимущества, представляет угрозу энергосбережению в случае остановки носовых оборудований (например, когда электрическое освещение заходит за рубеж).
+
+Термин "кабельный кабель" является синонимом к носовок и телефонам с модуляцией. Это называется модифицированный (или расширенный) примитивизацией, где дополнительная контактная проводка накачивается электрическим целоголосом сигналом.
+
+Некоторые компании предлагают компьютерные телефоны с модуляцией под кабель, что позволяет принимать данные сети в определенных случаях, и может быть использоваться для обмена информацией между кабельными проводками.
+
+По мнению некоторых специалистов, наилучшим способом подключения к электрической проводке является полная модификация (или расширенный примитивизации), в котором дополнительное контактное оборудование (например, носовый устройство или телефон) используется для передачи данных сети с использованием кабельного кабеля.
+
+Реализовать полный модификация (или расширенный примитивизацию) требует решений с высокой сложностью и мощностью системы. Однако, если предотвращать энергосбережение кабельного кабеля, то вряд ли это будет полезно для промышленных или крупных предприятий.
+2026-01-12 12:06:10,855 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: Кабель подключения можно имитировать с помощью компьютерной телефона или другого устройства, который способен принимать и посылать данные сети. Однако, не все устройства поддерживают кабельный кабель как основной способ связи.
+
+Из-за различных причин (например, внутридокументности, необходимости отраслевых конкуренций и т.п.) существует большое количество способов подключения (подключать) электрическую проводную связь.
+
+Первый вариант - примитивизация: вызывает в кабель носовок или телефонов, спускающаяся с носового оборудования, посылая сетевой сигнал на основной кабель.
+
+Стоит также подчеркнуть, что примитивизация, несмотря на свои преимущества, представляет угрозу энергосбережению в случае остановки носовых оборудований (например, когда электрическое освещение заходит за рубеж).
+
+Термин "кабельный кабель" является синонимом к носовок и телефонам с модуляцией. Это называется модифицированный (или расширенный) примитивизацией, где дополнительная контактная проводка накачивается электрическим целоголосом сигналом.
+
+Некоторые компании предлагают компьютерные телефоны с модуляцией под кабель, что позволяет принимать данные сети в определенных случаях, и может быть использоваться для обмена информацией между кабельными проводками.
+
+По мнению некоторых специалистов, наилучшим способом подключения к электрической проводке является полная модификация (или расширенный примитивизации), в котором дополнительное контактное оборудование (например, носовый устройство или телефон) используется для передачи данных сети с использованием кабельного кабеля.
+
+Реализовать полный модификация (или расширенный примитивизацию) требует решений с высокой сложностью и мощностью системы. Однако, если предотвращать энергосбережение кабельного кабеля, то вряд ли это будет полезно для промышленных или крупных предприятий.
+2026-01-12 12:06:10,857 - search-service - INFO - Searching for: 'Кабель подключения можно имитировать с помощью компьютерной телефона или другого устройства, который способен принимать и посылать данные сети. Однако, не все устройства поддерживают кабельный кабель как основной способ связи.
+
+Из-за различных причин (например, внутридокументности, необходимости отраслевых конкуренций и т.п.) существует большое количество способов подключения (подключать) электрическую проводную связь.
+
+Первый вариант - примитивизация: вызывает в кабель носовок или телефонов, спускающаяся с носового оборудования, посылая сетевой сигнал на основной кабель.
+
+Стоит также подчеркнуть, что примитивизация, несмотря на свои преимущества, представляет угрозу энергосбережению в случае остановки носовых оборудований (например, когда электрическое освещение заходит за рубеж).
+
+Термин "кабельный кабель" является синонимом к носовок и телефонам с модуляцией. Это называется модифицированный (или расширенный) примитивизацией, где дополнительная контактная проводка накачивается электрическим целоголосом сигналом.
+
+Некоторые компании предлагают компьютерные телефоны с модуляцией под кабель, что позволяет принимать данные сети в определенных случаях, и может быть использоваться для обмена информацией между кабельными проводками.
+
+По мнению некоторых специалистов, наилучшим способом подключения к электрической проводке является полная модификация (или расширенный примитивизации), в котором дополнительное контактное оборудование (например, носовый устройство или телефон) используется для передачи данных сети с использованием кабельного кабеля.
+
+Реализовать полный модификация (или расширенный примитивизацию) требует решений с высокой сложностью и мощностью системы. Однако, если предотвращать энергосбережение кабельного кабеля, то вряд ли это будет полезно для промышленных или крупных предприятий.' (limit: 5)
+2026-01-12 12:06:10,859 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 12:06:12,566 - search-service - ERROR - Search failed: 'QdrantClient' object has no attribute 'search'
+2026-01-12 12:06:12,567 - text-searcher-api - ERROR - Error in RAG flow: Search operation failed: 'QdrantClient' object has no attribute 'search'
+2026-01-12 12:08:13,092 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 12:13:18,837 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 12:13:18,842 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 12:13:18,842 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 12:13:18,916 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:13:57,594 - text-searcher-api - INFO - Step 1: Refining search query for: кабели подключения как подключить?
+2026-01-12 12:13:57,595 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 12:14:52,871 - text-searcher-api - INFO - Refined search query: Кабель подключенности (cable connection) - это проводная конструкция, которая служит для передачи электрических сил между двумя или несколькими точками. В случае подключения к Интернету (кабель с приёмом интернета), кабель является необходимым коммуникационным соединением, которое должно быть подключенно в соответствии с стандартами и правилами технологии интернет-сообщения, для того чтобы передача данных между компьютером или устройством и сервером могло происходить.
+
+Подключение к Интернету (кабель с приёмом интернета) может быть выполнено в два этапа: 1) подключение кабеля к сети WI-FI (wireless Internet access); 2) подключение кабеля к устройству с интерфейсом Ethernet (Ethernet interface).
+
+Дополнительная информация о том, как выполнить подключение кабеля к Интернету с помощью Ethernet-ассоциатора см. на странице "Основные принципы работы с Internet и WIFI" [https://tutv.ru/wiki/Oсновные_принципы_взаимодействия_Interneta__WIFI].
+2026-01-12 12:14:52,888 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: Кабель подключенности (cable connection) - это проводная конструкция, которая служит для передачи электрических сил между двумя или несколькими точками. В случае подключения к Интернету (кабель с приёмом интернета), кабель является необходимым коммуникационным соединением, которое должно быть подключенно в соответствии с стандартами и правилами технологии интернет-сообщения, для того чтобы передача данных между компьютером или устройством и сервером могло происходить.
+
+Подключение к Интернету (кабель с приёмом интернета) может быть выполнено в два этапа: 1) подключение кабеля к сети WI-FI (wireless Internet access); 2) подключение кабеля к устройству с интерфейсом Ethernet (Ethernet interface).
+
+Дополнительная информация о том, как выполнить подключение кабеля к Интернету с помощью Ethernet-ассоциатора см. на странице "Основные принципы работы с Internet и WIFI" [https://tutv.ru/wiki/Oсновные_принципы_взаимодействия_Interneta__WIFI].
+2026-01-12 12:14:52,889 - search-service - INFO - Searching for: 'Кабель подключенности (cable connection) - это проводная конструкция, которая служит для передачи электрических сил между двумя или несколькими точками. В случае подключения к Интернету (кабель с приёмом интернета), кабель является необходимым коммуникационным соединением, которое должно быть подключенно в соответствии с стандартами и правилами технологии интернет-сообщения, для того чтобы передача данных между компьютером или устройством и сервером могло происходить.
+
+Подключение к Интернету (кабель с приёмом интернета) может быть выполнено в два этапа: 1) подключение кабеля к сети WI-FI (wireless Internet access); 2) подключение кабеля к устройству с интерфейсом Ethernet (Ethernet interface).
+
+Дополнительная информация о том, как выполнить подключение кабеля к Интернету с помощью Ethernet-ассоциатора см. на странице "Основные принципы работы с Internet и WIFI" [https://tutv.ru/wiki/Oсновные_принципы_взаимодействия_Interneta__WIFI].' (limit: 5)
+2026-01-12 12:14:52,891 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 12:14:53,564 - search-service - ERROR - Search failed: 'QdrantClient' object has no attribute 'search'
+2026-01-12 12:14:53,564 - text-searcher-api - ERROR - Error in RAG flow: Search operation failed: 'QdrantClient' object has no attribute 'search'
+2026-01-12 12:15:18,425 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 12:15:21,131 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 12:15:21,132 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 12:15:21,133 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 12:15:21,251 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:17:00,662 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 12:17:00,666 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 12:17:00,666 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 12:17:00,754 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:17:43,284 - text-searcher-api - INFO - Step 1: Refining search query for: как подключить кабели сварочного аппарата?
+2026-01-12 12:17:43,287 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 12:20:20,258 - text-searcher-api - INFO - Refined search query: Для подключения кабелей сварового аппарата необходимо выполнить следующие шаги:
+
+1. Проверить принадлежность к кабелю сварного аппарата.
+
+2. Вызовите контакты на кабель, которые вы попали в указанную подставку (например, «K»), или напоперь через ноутбук. Если в этом случае нет результатов - выключите ноутбук и перезагрузите.
+
+3. Проверьте, что кабель включен. Для этого перейдите к указанному экрану панели конфигурации и нажмите на одну из подвесов. Внесите ноутбук в просторную сторону от кабеля сварного аппарата, а затем проверьте с кабелем принадлежащим к другому ноутубу.
+
+4. Для подключения электрододатчика (эхододаточного аппарата) необходимо выполнить все требования к распределению кабелей на ноутбук и отнести кабели к вызовитему контакту на электрододатчик.
+
+5. После подключения кабелей сварного аппарата и электрододатчика вам необходимо произвести тестирование захваченных данных кабелями сварного аппарата (установленным в разный вид кабелей) и электрододатчиком.
+
+6. Выполните ежегодные или принудительные проверки на коррозию (например, по 10-15 месяцев), чтобы обеспечить безопасность конструкции.
+2026-01-12 12:22:01,048 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 12:22:18,798 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 12:22:18,801 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 12:22:18,801 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 12:22:18,869 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:23:16,052 - text-searcher-api - INFO - Step 1: Refining search query for: как подключить кабели сварочного аппарата?
+2026-01-12 12:23:16,053 - chat-client - INFO - Sending chat request to Ollama: tinyllama
+2026-01-12 12:24:16,748 - text-searcher-api - INFO - Refined search query: Да, можно подключить кабели сварочного аппарата в следующие моменты:
+1. Войти в компьютерный интерфейс кабинета сварных аппаратов и выбрать необходимые кабели на разметке или закладках. 2. Проверьте, есть ли кабели под установленный момент, и если нет, выключите сварные аппараты. 3. Вручную установить кабели в зависимости от того, насколько подключаются к одной из них. Помните, что кабели должны быть принесены в запускная батарея кабинета сварных аппаратов. 4. Затем, выгрузить и установить все мощные электродные приводительные узлы, чтобы они работали нормально, и дождиться полного закначевания кабелей в кабинете сварных аппаратов. 5. Когда кабели подключены и работают нормально, начните выполнение необходимых действий, включая установку механической или электрооборудования для замены материалов сварного стекла.
+2026-01-12 12:32:16,268 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 12:32:18,582 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 12:32:18,582 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 12:32:18,583 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 12:32:18,672 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:32:33,278 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 12:32:52,477 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 12:32:52,478 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 12:32:52,478 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 12:32:52,544 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:33:39,406 - text-searcher-api - INFO - Step 1: Refining search query for: как подключить кабели сварочного аппарата?
+2026-01-12 12:33:39,407 - chat-client - INFO - Sending chat request to Ollama: deepseek-r1:1.5b
+2026-01-12 12:33:47,552 - chat-client - ERROR - Error calling Ollama chat: 404 Client Error: Not Found for url: http://ollama-llm-chat:11434/api/chat
+2026-01-12 12:33:47,552 - text-searcher-api - ERROR - Error in RAG flow: 404 Client Error: Not Found for url: http://ollama-llm-chat:11434/api/chat
+2026-01-12 12:35:28,873 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 12:35:54,812 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 12:35:54,812 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 12:35:54,813 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 12:35:54,908 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:37:35,160 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 12:37:37,298 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 12:37:37,299 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 12:37:37,299 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 12:37:37,370 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:37:39,394 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 12:37:39,395 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 12:37:39,395 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 12:37:39,470 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:38:52,746 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 12:39:15,235 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 12:39:15,235 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 12:39:15,236 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 12:39:15,325 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:40:04,514 - text-searcher-api - INFO - Step 1: Refining search query for: как подключить кабели сварочного?
+2026-01-12 12:40:04,516 - chat-client - INFO - Sending chat request to Ollama: deepseek-r1:1.5b
+2026-01-12 12:41:25,288 - text-searcher-api - INFO - Refined search query: Кажется, что для подключения кабелей сварочного необходимо использовать определенные специализированные термины в резонаторе. Несмотря на сложность процесса, рекомендуем ожидать оптимального резонатора с статистикой и техническими рекомендациями, чтобы минимизировать использование резонатора на русском языке.
+2026-01-12 12:43:21,813 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 12:43:24,197 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 12:43:24,198 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 12:43:24,198 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 12:43:24,307 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:43:53,104 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 12:44:09,671 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 12:44:09,672 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 12:44:09,673 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 12:44:09,746 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 12:44:56,712 - text-searcher-api - INFO - Step 1: Refining search query for: как работает подключение входных и выходных кабелей
+2026-01-12 12:44:56,715 - chat-client - INFO - Sending chat request to Ollama: llama3.1:8b
+2026-01-12 12:44:56,729 - chat-client - ERROR - Error calling Ollama chat: 404 Client Error: Not Found for url: http://ollama-llm-chat:11434/api/chat
+2026-01-12 12:44:56,729 - text-searcher-api - ERROR - Error in RAG flow: 404 Client Error: Not Found for url: http://ollama-llm-chat:11434/api/chat
+2026-01-12 13:21:24,717 - text-searcher-api - INFO - Step 1: Refining search query for: как работает подключение входных и выходных кабелей
+2026-01-12 13:21:24,723 - chat-client - INFO - Sending chat request to Ollama: llama3.1:8b
+2026-01-12 13:22:44,510 - text-searcher-api - INFO - Refined search query: "Подключение входных и выходных кабелей: схема подключения, типы соединений, рекомендации по монтажу"
+
+ или 
+
+"Подключение кабеля для передачи данных"
+
+ но наиболее подходящий вариант будет "Подключение входных и выходных кабелей"
+2026-01-12 13:26:06,110 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:26:08,558 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:26:08,558 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:26:08,558 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:26:08,714 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:26:09,939 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:26:11,901 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:26:11,902 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:26:11,902 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:26:11,966 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:26:17,390 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:26:19,359 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:26:19,359 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:26:19,359 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:26:19,421 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:26:25,025 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:26:51,015 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:26:51,026 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:26:51,033 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:26:51,149 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:29:44,074 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: как работает подключение входных и выходных кабелей
+2026-01-12 13:29:44,076 - search-service - INFO - Searching for: 'как работает подключение входных и выходных кабелей' (limit: 5)
+2026-01-12 13:29:44,076 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 13:29:44,319 - search-service - ERROR - Search failed: 'QdrantClient' object has no attribute 'search'
+2026-01-12 13:29:44,319 - text-searcher-api - ERROR - Error in RAG flow: Search operation failed: 'QdrantClient' object has no attribute 'search'
+2026-01-12 13:36:13,276 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:36:15,935 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:36:15,936 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:36:15,937 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:36:16,043 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:37:04,692 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:37:04,693 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:37:04,733 - search-service - INFO - Searching for: 'test' (limit: 1)
+2026-01-12 13:37:04,733 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 13:37:05,684 - search-service - INFO - Targeting chunk IDs: ['a2b4f1d2-8b2b-484b-ac1d-dc1bb917a727']
+2026-01-12 13:37:05,684 - search-service - INFO - Fetching full text and metadata for 1 chunks from Postgres...
+2026-01-12 13:37:05,812 - search-service - INFO - Postgres returned 1 records for 1 searched IDs.
+2026-01-12 13:37:05,812 - search-service - INFO - Found 1 matches for query.
+2026-01-12 13:37:41,211 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:37:43,651 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:37:43,652 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:37:43,652 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:37:43,730 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:38:02,230 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:38:04,611 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:38:04,612 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:38:04,613 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:38:04,688 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:39:58,900 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: test query
+2026-01-12 13:39:58,902 - search-service - INFO - Searching for: 'test query' (limit: 1)
+2026-01-12 13:39:58,904 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 13:39:59,021 - search-service - INFO - Targeting chunk IDs: ['a2b4f1d2-8b2b-484b-ac1d-dc1bb917a727']
+2026-01-12 13:39:59,021 - search-service - INFO - Fetching full text and metadata for 1 chunks from Postgres...
+2026-01-12 13:39:59,044 - search-service - INFO - Postgres returned 1 records for 1 searched IDs.
+2026-01-12 13:39:59,044 - search-service - INFO - Found 1 matches for query.
+2026-01-12 13:40:11,123 - text-searcher-api - INFO - Retrieved 1 relevant chunks.
+2026-01-12 13:40:11,125 - text-searcher-api - INFO - Step 4: Refining explanation intent for: test query
+2026-01-12 13:40:11,127 - chat-client - INFO - Sending chat request to Ollama: llama3.1:8b
+2026-01-12 13:40:29,013 - text-searcher-api - INFO - Explanation intent: What is the primary difference between a hash table and a binary search tree?
+2026-01-12 13:40:29,015 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 13:40:33,389 - chat-client - INFO - Sending chat request to Ollama: llama3.1:8b
+2026-01-12 13:40:57,808 - text-searcher-api - INFO - Step 6: Final answer generated.
+2026-01-12 13:41:42,598 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:41:45,225 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:41:45,226 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:41:45,226 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:41:45,325 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:42:07,669 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:42:33,709 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:42:33,717 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:42:33,729 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:42:33,941 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:43:00,936 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: как работает подключение входных и выходных кабелей
+2026-01-12 13:43:00,938 - search-service - INFO - Searching for: 'как работает подключение входных и выходных кабелей' (limit: 5)
+2026-01-12 13:43:00,939 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 13:43:05,880 - search-service - INFO - Targeting chunk IDs: ['5b188175-b076-4c62-8865-c0b2370d7ce4', 'cb938604-7263-4318-8ee5-33317a02d715', '0fcd077e-2d4d-4abf-a198-0b62f81a2a79', '159b1d4d-fd19-4d89-908c-dfc86272a5b8', '8d1b8d9a-adb5-45b9-80d6-34abe50d3720']
+2026-01-12 13:43:05,881 - search-service - INFO - Fetching full text and metadata for 5 chunks from Postgres...
+2026-01-12 13:43:05,976 - search-service - INFO - Postgres returned 5 records for 5 searched IDs.
+2026-01-12 13:43:05,977 - search-service - INFO - Found 5 matches for query.
+2026-01-12 13:43:05,978 - text-searcher-api - INFO - Retrieved 5 relevant chunks.
+2026-01-12 13:43:05,982 - text-searcher-api - INFO - Step 4: Refining explanation intent for: как работает подключение входных и выходных кабелей
+2026-01-12 13:43:05,983 - chat-client - INFO - Sending chat request to Ollama: llama3.1:8b
+2026-01-12 13:43:53,989 - text-searcher-api - INFO - Explanation intent: Подключение входных и выходных кабелей работает следующим образом:
+
+Входные кабели (предназначенные для соединения с внешними устройствами, такими как источники сигнала или контроллеры) подключаются к плате или устройству через специальные разъемы или порты.
+
+Выходные кабели (предназначенные для передачи сигнала на другое оборудование или периферию) подключаются к плате или устройству в аналогичный способ, что и входные кабели, но через другие разъемы или порты.
+
+При подключении кабелей необходимо соблюдать полярность (положение плюса и минуса), чтобы сигналы передавались корректно. Это особенно важно при работе с цифровыми сигналами, поскольку неправильная полярность может привести к ошибкам или разрушению оборудования.
+
+Например, если вы подключаете входной кабель к плате, который обрабатывает аудиосигнал, то необходимо убедиться, что плюс (+) находится на соответствующем контакте на плате. Если вы неправильно соедините плюс и минус (например, поменяв их местами), это может привести к искажению сигнала или разрушению оборудования.
+
+При правильном подключении кабелей через соответствующие разъемы или порты, а также соблюдении полярности, данные из входного кабеля будут передаваться на плату и затем на выходные устройства, чтобы обеспечить корректную работу системы.
+2026-01-12 13:43:53,992 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 13:43:53,993 - chat-client - INFO - Sending chat request to Ollama: llama3.1:8b
+2026-01-12 13:44:54,061 - chat-client - ERROR - Error calling Ollama chat: HTTPConnectionPool(host='ollama-llm-chat', port=11434): Read timed out. (read timeout=60)
+2026-01-12 13:44:54,063 - text-searcher-api - ERROR - Error in RAG flow: HTTPConnectionPool(host='ollama-llm-chat', port=11434): Read timed out. (read timeout=60)
+2026-01-12 13:47:51,603 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:48:10,549 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:48:10,550 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:48:10,551 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:48:10,683 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:50:02,584 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:50:02,586 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:50:02,587 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:50:02,679 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:52:04,401 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:52:04,407 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:52:04,420 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:52:04,658 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:52:37,204 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:53:07,629 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:53:07,630 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:53:07,631 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:53:07,727 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:53:27,526 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:53:52,909 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:53:52,910 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:53:52,911 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:53:53,011 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:54:53,894 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: как работает подключение входных и выходных кабелей
+2026-01-12 13:54:53,895 - search-service - INFO - Searching for: 'как работает подключение входных и выходных кабелей' (limit: 5)
+2026-01-12 13:54:53,896 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 13:54:54,381 - search-service - INFO - Targeting chunk IDs: ['5b188175-b076-4c62-8865-c0b2370d7ce4', 'cb938604-7263-4318-8ee5-33317a02d715', '0fcd077e-2d4d-4abf-a198-0b62f81a2a79', '159b1d4d-fd19-4d89-908c-dfc86272a5b8', '8d1b8d9a-adb5-45b9-80d6-34abe50d3720']
+2026-01-12 13:54:54,381 - search-service - INFO - Fetching full text and metadata for 5 chunks from Postgres...
+2026-01-12 13:54:54,431 - search-service - INFO - Postgres returned 5 records for 5 searched IDs.
+2026-01-12 13:54:54,432 - search-service - INFO - Found 5 matches for query.
+2026-01-12 13:54:54,432 - text-searcher-api - INFO - Retrieved 5 relevant chunks.
+2026-01-12 13:54:54,432 - text-searcher-api - INFO - Step 4: Refining explanation intent for: как работает подключение входных и выходных кабелей
+2026-01-12 13:54:54,433 - chat-client - INFO - Sending chat request to Ollama: llama3.1:8b
+2026-01-12 13:55:54,514 - chat-client - ERROR - Error calling Ollama chat: HTTPConnectionPool(host='ollama-llm-chat', port=11434): Read timed out. (read timeout=60)
+2026-01-12 13:55:54,519 - text-searcher-api - ERROR - Error in RAG flow: HTTPConnectionPool(host='ollama-llm-chat', port=11434): Read timed out. (read timeout=60)
+2026-01-12 13:59:22,261 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:59:24,947 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:59:24,948 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:59:24,948 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:59:25,030 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:59:27,076 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:59:27,076 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:59:27,077 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:59:27,142 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 13:59:36,505 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 13:59:38,757 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 13:59:38,757 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 13:59:38,758 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 13:59:38,832 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 14:00:47,042 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 14:03:00,883 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 14:03:00,883 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 14:03:00,883 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 14:03:00,956 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 14:07:59,636 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: как работает подключение входных и выходных кабелей
+2026-01-12 14:07:59,637 - search-service - INFO - Searching for: 'как работает подключение входных и выходных кабелей' (limit: 5)
+2026-01-12 14:07:59,638 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 14:08:00,672 - search-service - INFO - Targeting chunk IDs: ['5b188175-b076-4c62-8865-c0b2370d7ce4', 'cb938604-7263-4318-8ee5-33317a02d715', '0fcd077e-2d4d-4abf-a198-0b62f81a2a79', '159b1d4d-fd19-4d89-908c-dfc86272a5b8', '8d1b8d9a-adb5-45b9-80d6-34abe50d3720']
+2026-01-12 14:08:00,672 - search-service - INFO - Fetching full text and metadata for 5 chunks from Postgres...
+2026-01-12 14:08:00,804 - search-service - INFO - Postgres returned 5 records for 5 searched IDs.
+2026-01-12 14:08:00,805 - search-service - INFO - Found 5 matches for query.
+2026-01-12 14:08:00,806 - text-searcher-api - INFO - Retrieved 5 relevant chunks.
+2026-01-12 14:08:00,807 - text-searcher-api - INFO - Step 4: Refining explanation intent for: как работает подключение входных и выходных кабелей
+2026-01-12 14:08:00,807 - chat-client - INFO - Sending chat request to Ollama: phi3:3.8b
+2026-01-12 14:09:00,874 - chat-client - ERROR - Error calling Ollama chat: HTTPConnectionPool(host='ollama-llm-chat', port=11434): Read timed out. (read timeout=60)
+2026-01-12 14:09:01,192 - text-searcher-api - ERROR - Error in RAG flow: HTTPConnectionPool(host='ollama-llm-chat', port=11434): Read timed out. (read timeout=60)
+2026-01-12 14:09:30,270 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 14:10:08,483 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 14:10:08,483 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 14:10:08,484 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 14:10:08,618 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 14:11:32,132 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 14:11:49,921 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 14:11:49,922 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 14:11:49,923 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 14:11:50,015 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 14:16:44,761 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: как работает подключение входных и выходных кабелей
+2026-01-12 14:16:44,762 - search-service - INFO - Searching for: 'как работает подключение входных и выходных кабелей' (limit: 2)
+2026-01-12 14:16:44,763 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 14:16:45,857 - search-service - INFO - Targeting chunk IDs: ['5b188175-b076-4c62-8865-c0b2370d7ce4', 'cb938604-7263-4318-8ee5-33317a02d715']
+2026-01-12 14:16:45,857 - search-service - INFO - Fetching full text and metadata for 2 chunks from Postgres...
+2026-01-12 14:16:45,895 - search-service - INFO - Postgres returned 2 records for 2 searched IDs.
+2026-01-12 14:16:45,895 - search-service - INFO - Found 2 matches for query.
+2026-01-12 14:16:45,895 - text-searcher-api - INFO - Retrieved 2 relevant chunks.
+2026-01-12 14:16:45,896 - text-searcher-api - INFO - Step 4: Refining explanation intent for: как работает подключение входных и выходных кабелей
+2026-01-12 14:16:45,896 - chat-client - INFO - Sending chat request to Ollama: phi3:3.8b
+2026-01-12 14:17:05,510 - text-searcher-api - INFO - Explanation intent: Пользователь хочет узнать детальный методичный процесс по использованию подключенных входных и выходных кабелей.
+
+
+### Refined Intent Summary ###:
+
+The user wants a detailed explanation of how to use connected input and output cables, including the technical aspects behind their operation.
+2026-01-12 14:17:05,512 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 14:17:05,512 - chat-client - INFO - Sending chat request to Ollama: phi3:3.8b
+2026-01-12 14:18:05,582 - chat-client - ERROR - Error calling Ollama chat: HTTPConnectionPool(host='ollama-llm-chat', port=11434): Read timed out. (read timeout=60)
+2026-01-12 14:18:05,591 - text-searcher-api - ERROR - Error in RAG flow: HTTPConnectionPool(host='ollama-llm-chat', port=11434): Read timed out. (read timeout=60)
+2026-01-12 14:19:33,026 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 14:19:35,136 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 14:19:35,137 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 14:19:35,137 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 14:19:35,208 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 14:21:17,412 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 14:21:19,700 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 14:21:19,700 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 14:21:19,700 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 14:21:19,781 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 14:22:53,061 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 14:23:13,755 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 14:23:13,756 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 14:23:13,756 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 14:23:13,827 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 14:24:18,965 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: подключение сварочного ?
+2026-01-12 14:24:18,967 - search-service - INFO - Searching for: 'подключение сварочного ?' (limit: 3)
+2026-01-12 14:24:18,969 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 14:24:20,519 - search-service - INFO - Targeting chunk IDs: ['0fcd077e-2d4d-4abf-a198-0b62f81a2a79', 'cb938604-7263-4318-8ee5-33317a02d715', 'c1d55060-12eb-43ab-885b-697c024ef573']
+2026-01-12 14:24:20,520 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 14:24:20,569 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 14:24:20,570 - search-service - INFO - Found 3 matches for query.
+2026-01-12 14:24:20,571 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 14:24:20,572 - text-searcher-api - INFO - Step 4: Refining explanation intent for: подключение сварочного ?
+2026-01-12 14:24:20,573 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 14:24:20,594 - chat-client - ERROR - Error calling Ollama chat: 404 Client Error: Not Found for url: http://ollama-llm-chat:11434/api/chat
+2026-01-12 14:24:20,594 - text-searcher-api - ERROR - Error in RAG flow: 404 Client Error: Not Found for url: http://ollama-llm-chat:11434/api/chat
+2026-01-12 14:25:40,517 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: Подключение сварочного апарата
+2026-01-12 14:25:40,519 - search-service - INFO - Searching for: 'Подключение сварочного апарата' (limit: 5)
+2026-01-12 14:25:40,520 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 14:25:41,017 - search-service - INFO - Targeting chunk IDs: ['5b188175-b076-4c62-8865-c0b2370d7ce4', '3d7afced-2d44-4c6b-851c-9725fd032726', '0b0ca521-b0df-4f61-87c2-6af3f2cfcfba', '7b3c941a-fcea-4651-8d07-e9407df9d8d5', '7766eff0-2e75-4bc5-b9cf-c9e34c61b0f5']
+2026-01-12 14:25:41,018 - search-service - INFO - Fetching full text and metadata for 5 chunks from Postgres...
+2026-01-12 14:25:41,049 - search-service - INFO - Postgres returned 5 records for 5 searched IDs.
+2026-01-12 14:25:41,050 - search-service - INFO - Found 5 matches for query.
+2026-01-12 14:25:41,051 - text-searcher-api - INFO - Retrieved 5 relevant chunks.
+2026-01-12 14:25:41,051 - text-searcher-api - INFO - Step 4: Refining explanation intent for: Подключение сварочного апарата
+2026-01-12 14:25:41,052 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 14:25:41,080 - chat-client - ERROR - Error calling Ollama chat: 404 Client Error: Not Found for url: http://ollama-llm-chat:11434/api/chat
+2026-01-12 14:25:41,081 - text-searcher-api - ERROR - Error in RAG flow: 404 Client Error: Not Found for url: http://ollama-llm-chat:11434/api/chat
+2026-01-12 14:30:35,309 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: Подключение сварочного апарата
+2026-01-12 14:30:35,312 - search-service - INFO - Searching for: 'Подключение сварочного апарата' (limit: 5)
+2026-01-12 14:30:35,313 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 14:30:37,055 - search-service - INFO - Targeting chunk IDs: ['5b188175-b076-4c62-8865-c0b2370d7ce4', '3d7afced-2d44-4c6b-851c-9725fd032726', '0b0ca521-b0df-4f61-87c2-6af3f2cfcfba', '7b3c941a-fcea-4651-8d07-e9407df9d8d5', '7766eff0-2e75-4bc5-b9cf-c9e34c61b0f5']
+2026-01-12 14:30:37,056 - search-service - INFO - Fetching full text and metadata for 5 chunks from Postgres...
+2026-01-12 14:30:37,091 - search-service - INFO - Postgres returned 5 records for 5 searched IDs.
+2026-01-12 14:30:37,092 - search-service - INFO - Found 5 matches for query.
+2026-01-12 14:30:37,093 - text-searcher-api - INFO - Retrieved 5 relevant chunks.
+2026-01-12 14:30:37,094 - text-searcher-api - INFO - Step 4: Refining explanation intent for: Подключение сварочного апарата
+2026-01-12 14:30:37,095 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 14:30:41,019 - text-searcher-api - INFO - Explanation intent: I understand. Please provide me with the user's input, and I will assist you in determining the technical explanation they are seeking.
+2026-01-12 14:30:41,021 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 14:30:41,022 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 14:31:04,441 - text-searcher-api - INFO - Step 6: Final answer generated.
+2026-01-12 14:32:29,476 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 14:32:59,621 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 14:32:59,622 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 14:32:59,622 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 14:32:59,731 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 14:33:59,226 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: как подключить сварочний аппарат?
+2026-01-12 14:33:59,227 - search-service - INFO - Searching for: 'как подключить сварочний аппарат?' (limit: 3)
+2026-01-12 14:33:59,228 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 14:33:59,608 - search-service - INFO - Targeting chunk IDs: ['3d7afced-2d44-4c6b-851c-9725fd032726', '0b0ca521-b0df-4f61-87c2-6af3f2cfcfba', '79011980-f751-48c3-8056-f53434baeddd']
+2026-01-12 14:33:59,609 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 14:33:59,636 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 14:33:59,636 - search-service - INFO - Found 3 matches for query.
+2026-01-12 14:33:59,637 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 14:33:59,637 - text-searcher-api - INFO - Step 4: Refining explanation intent for: как подключить сварочний аппарат?
+2026-01-12 14:33:59,637 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 14:34:03,252 - text-searcher-api - INFO - Explanation intent: The user's intent is to learn how to connect a smart home device.
+
+**Refined intent summary:**
+
+How do I connect a smart home device to my home network?
+2026-01-12 14:34:03,253 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 14:34:03,253 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 14:34:15,562 - text-searcher-api - INFO - Step 6: Final answer generated.
+2026-01-12 14:40:17,772 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: как подключить сварочний аппарат?
+2026-01-12 14:40:27,383 - search-service - INFO - Searching for: 'как подключить сварочний аппарат?' (limit: 3)
+2026-01-12 14:40:27,387 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 14:40:28,354 - search-service - INFO - Targeting chunk IDs: ['3d7afced-2d44-4c6b-851c-9725fd032726', '0b0ca521-b0df-4f61-87c2-6af3f2cfcfba', '79011980-f751-48c3-8056-f53434baeddd']
+2026-01-12 14:40:28,354 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 14:40:28,371 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 14:40:28,372 - search-service - INFO - Found 3 matches for query.
+2026-01-12 14:40:28,373 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 14:43:25,447 - text-searcher-api - INFO - Step 4: Refining explanation intent for: как подключить сварочний аппарат?
+2026-01-12 14:43:34,484 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 14:50:20,481 - text-searcher-api - INFO - Explanation intent: Sure, here's the refined intent summary:
+
+**How to connect a wireless device**
+
+The user is seeking information on how to connect a wireless device, such as a smartphone or tablet, to a computer or other device.
+2026-01-12 14:50:20,486 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 14:50:20,486 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 14:50:39,125 - text-searcher-api - INFO - Step 6: Final answer generated.
+2026-01-12 14:50:39,241 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 14:50:41,810 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 14:50:41,810 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 14:50:41,811 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 14:50:41,883 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 14:53:49,686 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: Что следуєт делать если сварочный аппарат был только что установлен?
+2026-01-12 14:53:49,688 - search-service - INFO - Searching for: 'Что следуєт делать если сварочный аппарат был только что установлен?' (limit: 3)
+2026-01-12 14:53:49,688 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 14:53:50,655 - search-service - INFO - Targeting chunk IDs: ['3d7afced-2d44-4c6b-851c-9725fd032726', '0b0ca521-b0df-4f61-87c2-6af3f2cfcfba', '95e04013-1680-4b5f-a618-9a9d94542c38']
+2026-01-12 14:53:50,656 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 14:53:50,672 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 14:53:50,672 - search-service - INFO - Found 3 matches for query.
+2026-01-12 14:53:50,673 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 14:53:53,787 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 14:56:00,339 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 14:56:15,270 - text-searcher-api - INFO - Step 5: Final answer generated.
+2026-01-12 14:59:33,736 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 15:00:31,211 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 15:00:31,212 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 15:00:31,213 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 15:00:31,282 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 15:01:17,959 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: Что следуєт делать если сварочный аппарат был только что установлен?
+2026-01-12 15:01:17,960 - search-service - INFO - Searching for: 'Что следуєт делать если сварочный аппарат был только что установлен?' (limit: 3)
+2026-01-12 15:01:17,961 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 15:01:18,845 - search-service - INFO - Targeting chunk IDs: ['3d7afced-2d44-4c6b-851c-9725fd032726', '0b0ca521-b0df-4f61-87c2-6af3f2cfcfba', '95e04013-1680-4b5f-a618-9a9d94542c38']
+2026-01-12 15:01:18,847 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 15:01:18,904 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 15:01:18,905 - search-service - INFO - Found 3 matches for query.
+2026-01-12 15:01:18,905 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 15:01:18,906 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 15:01:18,906 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 15:01:30,183 - text-searcher-api - INFO - Step 5: Final answer generated.
+2026-01-12 15:02:23,161 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 15:02:51,699 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 15:02:51,700 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 15:02:51,700 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 15:02:51,772 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 15:09:22,709 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 15:10:14,509 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 15:10:14,510 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 15:10:14,510 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 15:10:14,604 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 15:11:00,760 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: Что следуєт делать если сварочный аппарат был только что установлен?
+2026-01-12 15:11:00,762 - search-service - INFO - Searching for: 'Что следуєт делать если сварочный аппарат был только что установлен?' (limit: 3)
+2026-01-12 15:11:00,763 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 15:11:02,261 - search-service - INFO - Targeting chunk IDs: ['3d7afced-2d44-4c6b-851c-9725fd032726', '0b0ca521-b0df-4f61-87c2-6af3f2cfcfba', '95e04013-1680-4b5f-a618-9a9d94542c38']
+2026-01-12 15:11:02,261 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 15:11:02,353 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 15:11:02,354 - search-service - INFO - Found 3 matches for query.
+2026-01-12 15:11:02,354 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 15:11:02,354 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 15:11:45,879 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 15:12:18,058 - text-searcher-api - INFO - Step 5: Final answer generated.
+2026-01-12 15:14:48,705 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 15:16:00,801 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 15:16:00,802 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 15:16:00,802 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 15:16:00,882 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 15:16:48,240 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 15:16:50,287 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 15:16:50,287 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 15:16:50,287 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 15:16:50,357 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 15:16:52,621 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 15:17:25,988 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 15:17:25,989 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 15:17:25,989 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 15:17:26,063 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 15:18:08,550 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: что мне нужно знать если сварочный аппарат был только что подключон?
+2026-01-12 15:18:08,552 - search-service - INFO - Searching for: 'что мне нужно знать если сварочный аппарат был только что подключон?' (limit: 3)
+2026-01-12 15:18:08,552 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 15:18:08,932 - search-service - INFO - Targeting chunk IDs: ['8d1b8d9a-adb5-45b9-80d6-34abe50d3720', '7766eff0-2e75-4bc5-b9cf-c9e34c61b0f5', '79011980-f751-48c3-8056-f53434baeddd']
+2026-01-12 15:18:08,932 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 15:18:08,958 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 15:18:08,958 - search-service - INFO - Found 3 matches for query.
+2026-01-12 15:18:08,958 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 15:18:08,959 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 15:18:08,959 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 15:18:21,584 - text-searcher-api - INFO - Step 5: Final answer generated.
+2026-01-12 15:18:55,837 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: что мне нужно знать если сварочный аппарат был только что подключон?
+2026-01-12 15:18:55,840 - search-service - INFO - Searching for: 'что мне нужно знать если сварочный аппарат был только что подключон?' (limit: 3)
+2026-01-12 15:18:55,841 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 15:18:56,133 - search-service - INFO - Targeting chunk IDs: ['8d1b8d9a-adb5-45b9-80d6-34abe50d3720', '7766eff0-2e75-4bc5-b9cf-c9e34c61b0f5', '79011980-f751-48c3-8056-f53434baeddd']
+2026-01-12 15:18:56,134 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 15:18:56,146 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 15:18:56,146 - search-service - INFO - Found 3 matches for query.
+2026-01-12 15:18:56,147 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 15:18:56,147 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 15:18:56,147 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 15:18:57,624 - text-searcher-api - INFO - Step 5: Final answer generated.
+2026-01-12 15:19:15,678 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: что такое сварочний аппарат?
+2026-01-12 15:19:15,680 - search-service - INFO - Searching for: 'что такое сварочний аппарат?' (limit: 3)
+2026-01-12 15:19:15,680 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 15:19:16,149 - search-service - INFO - Targeting chunk IDs: ['3d7afced-2d44-4c6b-851c-9725fd032726', '0b0ca521-b0df-4f61-87c2-6af3f2cfcfba', '79011980-f751-48c3-8056-f53434baeddd']
+2026-01-12 15:19:16,150 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 15:19:16,160 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 15:19:16,160 - search-service - INFO - Found 3 matches for query.
+2026-01-12 15:19:16,161 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 15:19:16,161 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 15:19:16,161 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 15:19:23,716 - text-searcher-api - INFO - Step 5: Final answer generated.
+2026-01-12 15:22:05,466 - text-searcher-api - INFO - Shutting down Text Searcher Microservice...
+2026-01-12 15:22:37,575 - text-searcher-api - INFO - Starting Text Searcher Microservice...
+2026-01-12 15:22:37,576 - search-service - INFO - Initializing LLM Client for embeddings...
+2026-01-12 15:22:37,577 - search-service - INFO - Initializing Qdrant client at qdrant-vector-db:6333
+2026-01-12 15:22:37,648 - text-searcher-api - INFO - Services initialized successfully.
+2026-01-12 15:23:10,775 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: Что мне нужно знать если сварочный аппарат был только что подключон?
+2026-01-12 15:23:10,776 - search-service - INFO - Searching for: 'Что мне нужно знать если сварочный аппарат был только что подключон?' (limit: 3)
+2026-01-12 15:23:10,777 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 15:23:11,059 - search-service - INFO - Targeting chunk IDs: ['8d1b8d9a-adb5-45b9-80d6-34abe50d3720', '7766eff0-2e75-4bc5-b9cf-c9e34c61b0f5', '0b0ca521-b0df-4f61-87c2-6af3f2cfcfba']
+2026-01-12 15:23:11,060 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 15:23:11,084 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 15:23:11,084 - search-service - INFO - Found 3 matches for query.
+2026-01-12 15:23:11,084 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 15:23:11,085 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 15:23:11,085 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 15:23:21,130 - text-searcher-api - INFO - Step 5: Final answer generated.
+2026-01-12 15:23:46,813 - text-searcher-api - INFO - Step 2/3: Searching Qdrant and fetching context for: Что мне нужно знать если сварочный аппарат был только что подключон?
+2026-01-12 15:23:46,814 - search-service - INFO - Searching for: 'Что мне нужно знать если сварочный аппарат был только что подключон?' (limit: 3)
+2026-01-12 15:23:46,815 - llm-client - INFO - Fetching embedding from http://ollama-llm-embedding:11434/api/embeddings for model nomic-embed-text
+2026-01-12 15:23:47,034 - search-service - INFO - Targeting chunk IDs: ['8d1b8d9a-adb5-45b9-80d6-34abe50d3720', '7766eff0-2e75-4bc5-b9cf-c9e34c61b0f5', '0b0ca521-b0df-4f61-87c2-6af3f2cfcfba']
+2026-01-12 15:23:47,035 - search-service - INFO - Fetching full text and metadata for 3 chunks from Postgres...
+2026-01-12 15:23:47,045 - search-service - INFO - Postgres returned 3 records for 3 searched IDs.
+2026-01-12 15:23:47,045 - search-service - INFO - Found 3 matches for query.
+2026-01-12 15:23:47,046 - text-searcher-api - INFO - Retrieved 3 relevant chunks.
+2026-01-12 15:23:47,046 - text-searcher-api - INFO - Step 5: Constructing context and generating final response...
+2026-01-12 15:23:47,046 - chat-client - INFO - Sending chat request to Ollama: gemma:2b
+2026-01-12 15:23:51,156 - text-searcher-api - INFO - Step 5: Final answer generated.
