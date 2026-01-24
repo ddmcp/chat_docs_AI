@@ -199,7 +199,7 @@ def extract_pdf_text_chunk_and_persist(bucket: str, filename: str):
 # --------------------------------------------------------------------------
 
 with DAG(
-    dag_id="minio_pdf_processor_dag",
+    dag_id="minio_pdf_extract_chunks_to_pg_dag",
     start_date=datetime(2024, 1, 1),
     schedule="* * * * *",
     catchup=False,
@@ -211,10 +211,10 @@ with DAG(
     filter_new_pdf_files_task = PythonOperator(task_id="filter_new_pdf_files", python_callable=filter_new_pdf_files)
     
     # Dynamic Task Mapping: Create one task per file in the queue
-    extract_pdf_text_chunk_and_persist_task = PythonOperator.partial(
+    extract_pdf_text_chunk_and_persist_pg_task = PythonOperator.partial(
         task_id="extract_pdf_text_chunk_and_persist", 
         python_callable=extract_pdf_text_chunk_and_persist,
         map_index_template="{{ bucket }}/{{ filename }}"
     ).expand(op_kwargs=filter_new_pdf_files_task.output)
 
-    list_minio_buckets_task >> list_pdf_files_task >> filter_new_pdf_files_task >> extract_pdf_text_chunk_and_persist_task
+    list_minio_buckets_task >> list_pdf_files_task >> filter_new_pdf_files_task >> extract_pdf_text_chunk_and_persist_pg_task

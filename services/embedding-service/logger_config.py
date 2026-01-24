@@ -24,10 +24,10 @@ def setup_logger(name: str):
     log_dir = "/app/logs"
     if not os.path.exists(log_dir):
         # Fallback for local testing if not in container
-        log_dir = "logs"
+        log_dir = ".log"
         os.makedirs(log_dir, exist_ok=True)
         
-    log_file = os.path.join(log_dir, "pdf-typing-microservice.log")
+    log_file = os.path.join(log_dir, "embedding-service.log")
     
     try:
         file_handler = RotatingFileHandler(log_file, maxBytes=10*1024*1024, backupCount=5)

@@ -157,8 +157,38 @@ async def ask_llm_model(request: Request, search_request: SearchRequest):
         
         if search_request.debug_flag:            
             response.sources = search_results
+            
+            # Extract unique documents with their metadata
+            docs_info = {}
+            for res in search_results:
+                pdf_id = res.get('pdf_id')
+                if pdf_id and pdf_id not in docs_info:
+                    docs_info[pdf_id] = {
+                        'pdf_id': pdf_id,
+                        'pdf_name': res.get('pdf_name', 'Unknown'),
+                        'metadata': res.get('metadata', {})
+                    }
+            
+            # Build detailed chunk information
+            chunks_info = []
+            for res in search_results:
+                chunks_info.append({
+                    'chunk_id': res.get('chunk_id'),
+                    'pdf_id': res.get('pdf_id'),
+                    'pdf_name': res.get('pdf_name', 'Unknown'),
+                    'page_number': res.get('page_number'),
+                    'chunk_index': res.get('chunk_index'),
+                    'similarity_score': res.get('score'),
+                    'metadata': res.get('metadata', {}),
+                    'text_preview': res.get('full_text', '')[:100] + '...' if len(res.get('full_text', '')) > 100 else res.get('full_text', '')
+                })
+            
             response.debug_info = {
-                "refined_query": user_looking_for_query                        
+                "refined_query": user_looking_for_query,
+                "documents_used": list(docs_info.values()),
+                "chunks_details": chunks_info,
+                "total_documents": len(docs_info),
+                "total_chunks": len(chunks_info)
             }
         
         return response

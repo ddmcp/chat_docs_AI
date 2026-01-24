@@ -87,12 +87,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Add debug info if available
         if (data && data.debug_info && debugToggle.checked) {
-            contentHtml += `
-                <div class="debug-info">
-                    Refined Query: ${data.debug_info.refined_query || 'N/A'}<br>
-                    Duration: ${data.duration_seconds}s
-                </div>
-            `;
+            let debugHtml = '<div class="debug-info">';
+            debugHtml += `<strong>🔍 Debug Information</strong><br>`;
+            debugHtml += `<strong>Refined Query:</strong> ${data.debug_info.refined_query || 'N/A'}<br>`;
+            debugHtml += `<strong>Duration:</strong> ${data.duration_seconds}s<br>`;
+            debugHtml += `<strong>Total Documents Used:</strong> ${data.debug_info.total_documents || 0}<br>`;
+            debugHtml += `<strong>Total Chunks Retrieved:</strong> ${data.debug_info.total_chunks || 0}<br><br>`;
+
+            // Documents Used
+            if (data.debug_info.documents_used && data.debug_info.documents_used.length > 0) {
+                debugHtml += '<details><summary><strong>📄 Documents Used</strong></summary><div style="margin-left: 20px;">';
+                data.debug_info.documents_used.forEach((doc, idx) => {
+                    debugHtml += `<div style="margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 5px;">`;
+                    debugHtml += `<strong>${idx + 1}. ${doc.pdf_name}</strong><br>`;
+                    debugHtml += `<small>PDF ID: ${doc.pdf_id}</small><br>`;
+                    if (doc.metadata && Object.keys(doc.metadata).length > 0) {
+                        debugHtml += `<details style="margin-top: 5px;"><summary>Metadata</summary><pre style="font-size: 11px;">${JSON.stringify(doc.metadata, null, 2)}</pre></details>`;
+                    }
+                    debugHtml += `</div>`;
+                });
+                debugHtml += '</div></details><br>';
+            }
+
+            // Chunks Details
+            if (data.debug_info.chunks_details && data.debug_info.chunks_details.length > 0) {
+                debugHtml += '<details><summary><strong>📦 Chunks Details</strong></summary><div style="margin-left: 20px;">';
+                data.debug_info.chunks_details.forEach((chunk, idx) => {
+                    debugHtml += `<div style="margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 5px;">`;
+                    debugHtml += `<strong>Chunk ${idx + 1}</strong><br>`;
+                    debugHtml += `<strong>Similarity Score:</strong> ${chunk.similarity_score ? chunk.similarity_score.toFixed(4) : 'N/A'}<br>`;
+                    debugHtml += `<strong>Source:</strong> ${chunk.pdf_name} (Page ${chunk.page_number}, Chunk ${chunk.chunk_index})<br>`;
+                    debugHtml += `<small>Chunk ID: ${chunk.chunk_id}</small><br>`;
+                    debugHtml += `<details style="margin-top: 5px;"><summary>Text Preview</summary><div style="font-size: 12px; margin-top: 5px;">${chunk.text_preview}</div></details>`;
+                    if (chunk.metadata && Object.keys(chunk.metadata).length > 0) {
+                        debugHtml += `<details style="margin-top: 5px;"><summary>Metadata</summary><pre style="font-size: 11px;">${JSON.stringify(chunk.metadata, null, 2)}</pre></details>`;
+                    }
+                    debugHtml += `</div>`;
+                });
+                debugHtml += '</div></details>';
+            }
+
+            debugHtml += '</div>';
+            contentHtml += debugHtml;
         }
 
         messageDiv.innerHTML = contentHtml;

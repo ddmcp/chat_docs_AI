@@ -76,10 +76,10 @@ default_args = {
 }
 
 with DAG(
-    dag_id="text_chunks_to_vectors_dag",
+    dag_id="pg_chunks_to_vectors_dag",
     default_args=default_args,
     description="Triggers embedding service to process new PDFs in batch",
-    schedule_interval=timedelta(minutes=1),
+    schedule="* * * * *",
     start_date=datetime(2024, 1, 1),
     catchup=False,
     tags=["embedding", "qdrant", "postgres", "batch"],
@@ -89,3 +89,5 @@ with DAG(
         task_id="trigger_batch_processing",
         python_callable=trigger_batch_processing,
     )
+    trigger_task
+

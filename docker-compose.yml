@@ -43,7 +43,7 @@ services:
     volumes:
       # Mount local folders for DAGs, logs
       - ./dags:/opt/airflow/dags
-      - ./.logs:/opt/airflow/logs
+      - ./.log:/opt/airflow/logs
       - ./volumes/pg-airflow-db:/opt/airflow/data # Only database files
     depends_on:
       pg-airflow-db:
@@ -90,7 +90,7 @@ services:
       - "5678:5678"
     volumes:
       - ./dags:/opt/airflow/dags
-      - ./.logs:/opt/airflow/logs
+      - ./.log:/opt/airflow/logs
       - ./volumes/pg-airflow-db:/opt/airflow/data # Only database files
     depends_on:
       pg-airflow-db:
@@ -122,7 +122,7 @@ services:
     command: dag-processor
     volumes:
       - ./dags:/opt/airflow/dags
-      - ./.logs:/opt/airflow/logs
+      - ./.log:/opt/airflow/logs
       - ./volumes/pg-airflow-db:/opt/airflow/data # Only database files
     depends_on:
       - pg-airflow-db

@@ -18,7 +18,7 @@ htmlcov/
 *.swo
 
 # Project Data & Logs
-.logs/
+.log/
 volumes/
 
 # OS
