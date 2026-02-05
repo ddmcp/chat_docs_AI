@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from typing import List, Dict, Optional
 from search_service import SearchService
 from chat_with_ollama_llm import ChatWithOllamaLlm
-from prompts import USER_LOOKING_FOR_PROMPT, RAG_FINAL_ANSWER_TEMPLATE
+from prompts import SYSTEM_PROMPT
 from logger_config import setup_logger
 from dotenv import load_dotenv
 
@@ -47,7 +47,7 @@ app.add_middleware(
 
 class SearchRequest(BaseModel):
     query: str
-    limit: int = 5
+    limit: int = 3
     debug_flag: bool = False
 
 class SearchResponse(BaseModel):
@@ -119,11 +119,7 @@ async def ask_llm_model(request: Request, search_request: SearchRequest):
     try:
         user_looking_for_query = search_request.query
         # Step 1: Refine query for searching
-        # Can be used for a better search intent
-        
-        # logger.info(f"Step 1: Refining search query for: {user_looking_for_query}")
-        # user_looking_for_query = chat_with_ollama_llm.generate_response(USER_LOOKING_FOR_PROMPT, user_looking_for_query)
-        # logger.info(f"Refined search query: {user_looking_for_query}")
+        # TODO Can be used for a better search intent
         
         # # Step 2 & 3: Search Qdrant and get PostgreSQL context
         logger.info(f"Step 2/3: Searching Qdrant and fetching context for: {user_looking_for_query}")
@@ -137,14 +133,10 @@ async def ask_llm_model(request: Request, search_request: SearchRequest):
             for res in search_results
         ])
         
-        final_prompt = RAG_FINAL_ANSWER_TEMPLATE.format(
-            query=user_looking_for_query,
-            context=context_text
-        )
+        final_prompt = f"Context:\n{context_text}\n\nQuestion:\n{user_looking_for_query}"
         
         # Step 5: Generate final answer
-        # We pass an empty string as system prompt since instructions are now in the user prompt template
-        llm_answer = chat_with_ollama_llm.generate_response("", final_prompt)
+        llm_answer = chat_with_ollama_llm.generate_response(SYSTEM_PROMPT, final_prompt)
         logger.info("Step 5: Final answer generated.")
         
         duration = round(time.time() - start_time, 2)

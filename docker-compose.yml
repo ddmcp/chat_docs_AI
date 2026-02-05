@@ -253,7 +253,7 @@ services:
       - DB_PASS=pdfpassword
       - QDRANT_HOST=qdrant-vector-db
       - QDRANT_PORT=6333
-      - OLLAMA_CHAT_MODEL=gemma:2b
+      - OLLAMA_CHAT_MODEL=tinyllama
       - OLLAMA_EMBEDDING_MODEL=nomic-embed-text
     volumes:
       - ./services/chat-docs-service:/app
@@ -347,15 +347,15 @@ services:
     restart: always
     tty: true
     environment:
-      - OLLAMA_MODEL=gemma:2b
+      - OLLAMA_MODEL=tinyllama
     deploy:
       resources:
         limits:
-          cpus: '8.0'
-          memory: 8G
+          cpus: '10.0'
+          memory: 10G
         reservations:
-          cpus: '2.0'
-          memory: 4G
+          cpus: '5.0'
+          memory: 6G
     volumes:
       - ./volumes/ollama-llm-chat-data:/root/.ollama
     ports:

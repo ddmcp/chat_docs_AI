@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Use gemma:2b by default if not specified
-MODEL_NAME=${OLLAMA_MODEL:-gemma:2b}
+MODEL_NAME=${OLLAMA_MODEL:-tinyllama}
 
 echo "🚀 Starting Ollama..."
 /bin/ollama serve &

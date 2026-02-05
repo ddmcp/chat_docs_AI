@@ -9,7 +9,7 @@ class ChatWithOllamaLlm:
     def __init__(self):
         # Ollama chat service URL
         self.base_url = os.getenv("OLLAMA_CHAT_URL", "http://ollama-llm-chat:11434")
-        self.model = os.getenv("OLLAMA_CHAT_MODEL", "gemma:2b") # Using Gemma for balanced performance
+        self.model = os.getenv("OLLAMA_CHAT_MODEL", "tinyllama") # Using TinyLlama for lightweight performance
 
     def generate_response(self, system_prompt: str, user_input: str) -> str:
         """Generates a response from the LLM using a system prompt and user input."""

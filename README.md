@@ -1,7 +1,7 @@
 # 🚀 Chat with your DOCS using Airflow & MinIO: GenAI LLMs and RAG Pipeline
 
 
-***Transform your static PDF collection into a searchable, interactive knowledge base using Airflow, Qdrant, and Gemma:2b.***
+***Transform your static PDF collection into a searchable, interactive knowledge base using Airflow, Qdrant, and TinyLlama.***
 
 
 ## 🚀 Getting Started
@@ -19,7 +19,7 @@ docker-compose up -d
 docker logs -f ollama-llm-chat
 ```
 ```bash
-✅ Ollama is ready and model 'gemma:2b' is active.
+✅ Ollama is ready and model 'tinyllama' is active.
 ```
 
 ### 3. Configure Airflow
@@ -56,7 +56,7 @@ This project implements a complete **Retrieval-Augmented Generation (RAG)** pipe
 
 - **Orchestration**: Managed by **Apache Airflow 3.x**.
 - **Storage**: Files in **MinIO**, Metadata in **Postgres**, Vectors in **Qdrant**.
-- **AI Engine**: Local LLM and Embeddings via **Ollama** (`gemma:2b` for chat, `nomic-embed-text` for vectors).
+- **AI Engine**: Local LLM and Embeddings via **Ollama** (`tinyllama` for chat, `nomic-embed-text` for vectors).
 
 ### 🏗 Architecture At a Glance
 
@@ -131,7 +131,7 @@ chat_docs_AI/
 │   ├── embedding-service/    # SQL to Vector ingestion logic
 │   └── typing-pdf-extractor-service/ # PDF parsing & metadata
 ├── llm_services/             # AI Engine Runners (Ollama)
-│   ├── ollama-llm-chat/      # Gemma:2b chat service
+│   ├── ollama-llm-chat/      # TinyLlama chat service
 │   └── ollama-llm-embedding/ # nomic-embed-text embedding service
 ├── volumes/                  # Persistent Data Storage
 │   ├── minio-files-data/     # PDF storage
