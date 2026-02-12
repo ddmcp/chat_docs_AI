@@ -1,7 +1,89 @@
-# 🚀 Chat with your DOCS using Airflow & MinIO: GenAI LLMs and RAG Pipeline
+# 🚀 Chat with your DOCS
 
+> **A secure, cloud-agnostic GenAI platform to unlock insights from internal documents using RAG.**
 
-***Transform your static PDF collection into a searchable, interactive knowledge base using Airflow, Qdrant, and TinyLlama.***
+![Project Status](https://img.shields.io/badge/Status-Project_Overview-brightgreen)
+![Tech Stack](https://img.shields.io/badge/Stack-Airflow_%7C_MinIO_%7C_Qdrant_%7C_LangChain-blue)
+![License](https://img.shields.io/badge/License-Open--Source-orange)
+
+---
+
+## 📖 Project Overview
+
+We deliver a **secure, cloud-agnostic GenAI platform** that allows organizations to unlock insights from internal documents — **without exposing data to external AI providers**.
+
+Built entirely on open-source technologies, this solution runs in your own cloud or on-prem infrastructure, giving you full control over data, models, and security.
+
+---
+
+## 🛠️ What the System Does
+
+Simply upload your documents (`PDFs`, `reports`, `policies`, `technical files`, etc.) into secure **MinIO object storage**, and intelligent AI agents can:
+
+*   🔍 **Answer questions** based on your internal knowledge.
+*   🧠 **Perform semantic search** across all documents.
+*   ⚠️ **Identify risks**, summaries, and analytics via text requests.
+
+---
+
+## 🔐 Security First
+
+**All processing happens inside your environment.**
+No third-party APIs, no data sharing, and no external LLM calls. Your data stays within your perimeter.
+
+---
+
+## 🏗️ Technology Stack
+
+| Layer | Component |
+| :--- | :--- |
+| **Orchestration** | Apache Airflow |
+| **Backend & APIs** | Python, FastAPI, REST, Swagger |
+| **Storage** | MinIO (Object), PostgreSQL (Structured) |
+| **Vector Search** | Qdrant (Embeddings & Semantic Retrieval) |
+| **AI Layer** | LangChain + Ollama with Private LLM models |
+| **Capabilities** | Embeddings, RAG, AI Agents |
+
+---
+
+## ✨ Key Advantages
+
+- 🛡️ **Security-first architecture** – Data never leaves your perimeter.
+- ☁️ **Cloud agnostic** – Deploy on AWS, Azure, GCP, or on-prem.
+- 🔒 **Private GenAI** – Uses your own LLM models by default.
+- 📄 **Document intelligence** – Built specifically for PDF-heavy environments.
+- 🧩 **Scalable & modular** – Extend with new agents, models, and pipelines.
+
+---
+
+## 📂 Ideal For
+
+Organizations handling sensitive documents in areas such as:
+*   ✅ **Risk analysis**
+*   ✅ **Compliance & policy review**
+*   ✅ **Internal knowledge management**
+*   ✅ **Operational analytics**
+
+---
+
+## 💡 The Result
+
+A private, enterprise-grade AI knowledge system that turns your documents into a **secure, searchable, and intelligent decision-support layer**.
+
+### Instead of digging through folders, users simply:
+
+> 🗨️ **Ask** questions in plain language.
+> 🔍 **Search** across all documents at once.
+> 🎯 **Identify** risks, gaps, and key insights instantly.
+
+### 🌟 Experience the change:
+- *“What risks are mentioned in our supplier contracts?”* → **Instant overview**
+- *“Summarize the main points of pre-sales”* → **Short, structured summary**
+- *“What does our policy say about data retention?”* → **Clear answer with context**
+
+---
+
+***Transform your static PDF collection into a searchable, interactive knowledge base using Airflow, Qdrant, and Private LLMs.***
 
 
 ## 🚀 Getting Started
