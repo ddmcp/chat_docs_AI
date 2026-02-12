@@ -1,4 +1,6 @@
-# 🚀 Chat with your DOCS
+# 🚀 Chat Docs AI
+
+### *Chat with your DOCS using Private, Cloud Agnostic GenAI Platform*
 
 > **A secure, cloud-agnostic GenAI platform to unlock insights from internal documents using RAG.**
 
