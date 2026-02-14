@@ -133,10 +133,12 @@ async def ask_llm_model(request: Request, search_request: SearchRequest):
             for res in search_results
         ])
         
-        final_prompt = f"Context:\n{context_text}\n\nQuestion:\n{user_looking_for_query}"
-        
         # Step 5: Generate final answer
-        llm_answer = chat_with_ollama_llm.generate_response(SYSTEM_PROMPT, final_prompt)
+        llm_answer, llm_messages = chat_with_ollama_llm.generate_response(
+            SYSTEM_PROMPT, 
+            context=context_text, 
+            user_prompt=user_looking_for_query
+        )
         logger.info("Step 5: Final answer generated.")
         
         duration = round(time.time() - start_time, 2)
@@ -180,7 +182,8 @@ async def ask_llm_model(request: Request, search_request: SearchRequest):
                 "documents_used": list(docs_info.values()),
                 "chunks_details": chunks_info,
                 "total_documents": len(docs_info),
-                "total_chunks": len(chunks_info)
+                "total_chunks": len(chunks_info),
+                "llm_messages": [m.dict() for m in llm_messages]
             }
         
         return response
