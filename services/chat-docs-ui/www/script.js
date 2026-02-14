@@ -124,6 +124,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     debugHtml += `</div>`;
                 });
+                debugHtml += '</div></details><br>';
+            }
+
+            // LLM Messages (Prompt Construction)
+            if (data.debug_info.llm_messages && data.debug_info.llm_messages.length > 0) {
+                debugHtml += '<details><summary><strong>💬 Prompt Messages</strong></summary><div style="margin-left: 20px;">';
+                data.debug_info.llm_messages.forEach((msg, idx) => {
+                    const type = msg.type || 'message';
+                    const roleColor = type === 'system' ? '#818cf8' : '#38bdf8';
+                    debugHtml += `<div style="margin: 10px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 5px; border-left: 3px solid ${roleColor};">`;
+                    debugHtml += `<strong style="color: ${roleColor}; text-transform: uppercase; font-size: 10px;">${type}</strong><br>`;
+                    debugHtml += `<div style="font-size: 12px; white-space: pre-wrap; margin-top: 5px;">${msg.content}</div>`;
+                    debugHtml += `</div>`;
+                });
                 debugHtml += '</div></details>';
             }
 
